@@ -1,0 +1,17 @@
+﻿@model DziennikASPDotNetMVC.Models.User
+
+<h2>Szczegóły użytkownika</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Dane użytkownika</h5>
+        <p><strong>ID:</strong> @Model.userId</p>
+        <p><strong>Imię:</strong> @Model.name</p>
+        <p><strong>Nazwisko:</strong> @Model.surname</p>
+        <p><strong>Login:</strong> @Model.login</p>
+        <p><strong>Password:</strong> @Model.password</p>
+        <p><strong>Typ:</strong> @Model.type</p>
+    </div>
+</div>
+
+<a asp-action="Index" class="btn btn-primary mt-3">Powrót do listy</a>

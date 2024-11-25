@@ -1,0 +1,54 @@
+﻿@model DziennikASPDotNetMVC.Models.User
+
+<h2>Edytuj użytkownika</h2>
+
+<form asp-action="Edit" method="post">
+    <!-- Ukrycie ID użytkownika w formularzu -->
+    <input type="hidden" asp-for="userId" />
+
+    <!-- Imię użytkownika -->
+    <div class="form-group">
+        <label asp-for="name" class="control-label"></label>
+        <input asp-for="name" class="form-control" />
+        <span asp-validation-for="name" class="text-danger"></span>
+    </div>
+
+    <!-- Nazwisko użytkownika -->
+    <div class="form-group">
+        <label asp-for="surname" class="control-label"></label>
+        <input asp-for="surname" class="form-control" />
+        <span asp-validation-for="surname" class="text-danger"></span>
+    </div>
+
+    <!-- Login użytkownika -->
+    <div class="form-group">
+        <label asp-for="login" class="control-label"></label>
+        <input asp-for="login" class="form-control" />
+        <span asp-validation-for="login" class="text-danger"></span>
+    </div>
+
+    <!-- Hasło użytkownika -->
+    <div class="form-group">
+        <label asp-for="password" class="control-label"></label>
+        <input asp-for="password" class="form-control" />
+        <span asp-validation-for="password" class="text-danger"></span>
+    </div>
+
+    <!-- Typ użytkownika -->
+    <div class="form-group">
+        <label asp-for="type" class="control-label"></label>
+        <input asp-for="type" class="form-control" />
+        <span asp-validation-for="type" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Zapisz</button>
+        <a asp-action="Index" class="btn btn-secondary">Anuluj</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

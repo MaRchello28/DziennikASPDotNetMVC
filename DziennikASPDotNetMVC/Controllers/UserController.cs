@@ -13,80 +13,146 @@ namespace DziennikASPDotNetMVC.Controllers
             this.db = db;
         }
         // GET: UserController
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            // Pobranie listy użytkowników z bazy danych
+            var users = await db.User.ToListAsync();
+
+            // Przekazanie danych do widoku
+            return View(users);
         }
 
         // GET: UserController/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
+        {
+            // Pobranie użytkownika z bazy danych
+            var user = await db.User.FirstOrDefaultAsync(u => u.userId == id);
+
+            // Sprawdzenie, czy użytkownik istnieje
+            if (user == null)
+            {
+                return NotFound(); // Zwrot kodu 404, jeśli nie znaleziono użytkownika
+            }
+
+            // Przekazanie użytkownika do widoku
+            return View(user);
+        }
+        public IActionResult Create()
         {
             return View();
         }
-
-        // GET: UserController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: UserController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind("name,surname,login,password,type")] User user)
+        public async Task<ActionResult> Create([Bind("name,surname,type,login,password")] User user)
         {
+            if (user.type == "admin")
+            {
+                // Jeśli użytkownik to "admin", nie generujemy loginu ani hasła
+                if (string.IsNullOrEmpty(user.login) || string.IsNullOrEmpty(user.password))
+                {
+                    // Jeśli login lub hasło nie zostały podane, zwróć błąd
+                    ModelState.AddModelError("", "Login i hasło są wymagane dla użytkownika typu 'admin'.");
+                    return View(user);
+                }
+            }
+            else
+            {
+                // Generowanie loginu i hasła, jeśli użytkownik nie jest adminem
+                user.login = (user.name.Substring(0, Math.Min(3, user.name.Length)) + user.surname).ToLower();
+                user.password = GenerateRandomPassword(15);
+            }
+
             if (ModelState.IsValid)
             {
-                // Dodaj użytkownika do bazy danych
                 db.User.Add(user);
                 await db.SaveChangesAsync();
 
-                // Przekierowanie na stronę Index po zapisaniu
                 return RedirectToAction(nameof(Index));
             }
             return View(user);
         }
 
-        // GET: UserController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            return View();
-        }
+            var user = await db.User.FirstOrDefaultAsync(u => u.userId == id);
 
-        // POST: UserController/Edit/5
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(int id, [Bind("userId,name,surname,login,password,type")] User user)
         {
-            try
+            if (id != user.userId)
             {
-                return RedirectToAction(nameof(Index));
+                return BadRequest();
             }
-            catch
+            if (ModelState.IsValid)
             {
-                return View();
+                try
+                {
+                    db.Update(user);
+                    await db.SaveChangesAsync();
+
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+
+                    if (!UserExists(user.userId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
             }
+
+            return View(user);
         }
 
-        // GET: UserController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            return View();
-        }
 
-        // POST: UserController/Delete/5
-        [HttpPost]
+            var user = await db.User.FirstOrDefaultAsync(u => u.userId == id);
+
+            if (user == null)
+            {
+                return NotFound(); 
+            }
+
+            return View(user);
+        }
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            try
+            var user = await db.User.FirstOrDefaultAsync(u => u.userId == id);
+
+            if (user != null)
             {
-                return RedirectToAction(nameof(Index));
+                db.User.Remove(user);
+                await db.SaveChangesAsync();
             }
-            catch
-            {
-                return View();
-            }
+
+            return RedirectToAction(nameof(Index));
+        }
+        private bool UserExists(int id)
+        {
+            return db.User.Any(e => e.userId == id);
+        }
+        private string GenerateRandomPassword(int length)
+        {
+            const string validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()";
+            var random = new Random();
+            return new string(Enumerable.Repeat(validChars, length)
+                                        .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }

@@ -11,7 +11,9 @@ namespace DziennikASPDotNetMVC.Models
     public class User
     {
         public int userId {  get; set; }
+        [Required(ErrorMessage = "Imię jest wymagane.")]
         public string name { get; set; }
+        [Required(ErrorMessage = "Nazwisko jest wymagane.")]
         public string surname { get; set; }
         public string login { get; set; }
         public string password { get; set; }

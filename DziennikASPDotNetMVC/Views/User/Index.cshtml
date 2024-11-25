@@ -1,0 +1,35 @@
+﻿@model IEnumerable<DziennikASPDotNetMVC.Models.User>
+
+<h2>Lista użytkowników</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Imię</th>
+            <th>Nazwisko</th>
+            <th>Login</th>
+            <th>Typ</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.userId</td>
+                <td>@user.name</td>
+                <td>@user.surname</td>
+                <td>@user.login</td>
+                <td>@user.type</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@user.userId" class="btn btn-info">Szczegóły</a>
+                    <a asp-action="Edit" asp-route-id="@user.userId" class="btn btn-warning">Edytuj</a>
+                    <a asp-action="Delete" asp-route-id="@user.userId" class="btn btn-danger">Usuń</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a asp-action="Create" class="btn btn-success">Dodaj nowego użytkownika</a>
+
