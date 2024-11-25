@@ -1,0 +1,44 @@
+﻿@model IEnumerable<DziennikASPDotNetMVC.Models.Session>
+
+@{
+    ViewBag.Title = "Sessions";
+}
+
+<h2>Sessions</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<table class="table">
+    <tr>
+        <th>Session ID</th>
+        <th>Subject ID</th>
+        <th>Teacher ID</th>
+        <th>Day of Week</th>
+        <th>Hour From</th>
+        <th>Hour To</th>
+        <th>Class Schedule ID</th>
+        <th>Sala</th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.sessionId)</td>
+            <td>@Html.DisplayFor(modelItem => item.subjectId)</td>
+            <td>@Html.DisplayFor(modelItem => item.teacherId)</td>
+            <td>@Html.DisplayFor(modelItem => item.dayOfTheWeek)</td>
+            <td>@Html.DisplayFor(modelItem => item.hourFrom)</td>
+            <td>@Html.DisplayFor(modelItem => item.hourTo)</td>
+            <td>@Html.DisplayFor(modelItem => item.ClassScheduleId)</td>
+            <td>@Html.DisplayFor(modelItem => item.sala)</td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.sessionId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.sessionId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.sessionId })
+            </td>
+        </tr>
+    }
+</table>

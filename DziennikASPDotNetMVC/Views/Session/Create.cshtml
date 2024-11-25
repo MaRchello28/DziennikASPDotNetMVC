@@ -1,0 +1,77 @@
+﻿@model DziennikASPDotNetMVC.Models.Session
+
+@{
+    ViewBag.Title = "Create Session";
+}
+
+<h2>Create Session</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <!-- Subject ID -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.subjectId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.subjectId)
+            </div>
+        </div>
+
+        <!-- Teacher ID -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.teacherId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.teacherId)
+            </div>
+        </div>
+
+        <!-- Day of Week -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.dayOfTheWeek, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.dayOfTheWeek, new SelectList(Enum.GetValues(typeof(DayOfWeek))), "Select Day", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.dayOfTheWeek, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <!-- Hour From -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.hourFrom, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.hourFrom, "{0:HH:mm}", new { @class = "form-control", placeholder = "HH:mm" })
+                @Html.ValidationMessageFor(model => model.hourFrom, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.hourTo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.hourTo, "{0:HH:mm}", new { @class = "form-control", placeholder = "HH:mm" })
+                @Html.ValidationMessageFor(model => model.hourTo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <!-- Sala -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.sala, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sala)
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
