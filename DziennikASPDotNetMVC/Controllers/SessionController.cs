@@ -6,8 +6,11 @@ namespace DziennikASPDotNetMVC.Controllers
 {
     public class SessionController : Controller
     {
-        private readonly MyDbContext _context;
-
+        private readonly MyDbContext _context; 
+        public SessionController(MyDbContext context)
+        {
+            this._context = context;
+        }
         // GET: Session
         public ActionResult Index()
         {
