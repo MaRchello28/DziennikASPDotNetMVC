@@ -1,0 +1,28 @@
+﻿@model IEnumerable<DziennikASPDotNetMVC.Models.Subject>
+
+<h2>Lista Przedmiotów</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nazwa</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var subject in Model)
+        {
+            <tr>
+                <td>@subject.subjectId</td>
+                <td>@subject.name</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@subject.subjectId" class="btn btn-info">Szczegóły</a>
+                    <a asp-action="Edit" asp-route-id="@subject.subjectId" class="btn btn-warning">Edytuj</a>
+                    <a asp-action="Delete" asp-route-id="@subject.subjectId" class="btn btn-danger">Usuń</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a asp-action="Create" class="btn btn-success">Dodaj nowy przedmiot</a>
+

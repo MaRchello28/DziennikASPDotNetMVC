@@ -1,0 +1,20 @@
+﻿@model DziennikASPDotNetMVC.Models.Subject
+
+<h2>Usuń przedmiot</h2>
+
+<h3>Czy na pewno chcesz usunąć ten przedmiot?</h3>
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">ID</dt>
+        <dd class="col-sm-10">@Model.subjectId</dd>
+
+        <dt class="col-sm-2">Imię</dt>
+        <dd class="col-sm-10">@Model.name</dd>
+    </dl>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="subjectId" />
+        <button type="submit" class="btn btn-danger">Usuń</button>
+        <a asp-action="Index" class="btn btn-secondary">Anuluj</a>
+    </form>
+</div>

@@ -1,0 +1,13 @@
+﻿@model DziennikASPDotNetMVC.Models.Subject
+
+<h2>Szczegóły przedmiotu</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Dane przedmiotu</h5>
+        <p><strong>ID:</strong> @Model.subjectId</p>
+        <p><strong>Imię:</strong> @Model.name</p>
+    </div>
+</div>
+
+<a asp-action="Index" class="btn btn-primary mt-3">Powrót do listy</a>

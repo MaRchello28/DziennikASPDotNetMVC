@@ -1,0 +1,24 @@
+﻿@model DziennikASPDotNetMVC.Models.Subject
+
+<h2>Edytuj przedmiot</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="subjectId" />
+
+    <div class="form-group">
+        <label asp-for="name" class="control-label"></label>
+        <input asp-for="name" class="form-control" />
+        <span asp-validation-for="name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Zapisz</button>
+        <a asp-action="Index" class="btn btn-secondary">Anuluj</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,23 @@
+﻿@model DziennikASPDotNetMVC.Models.Subject
+
+@{
+    ViewData["Title"] = "Dodaj przedmiot";
+}
+
+<h1>Dodaj przedmiot</h1>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="name" class="control-label"></label>
+        <input asp-for="name" class="form-control" />
+        <span asp-validation-for="name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Dodaj</button>
+    </div>
+</form>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
