@@ -3,6 +3,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+#Dodane ręcznie
+appsettings.json
+
 # User-specific files
 *.rsuser
 *.suo
@@ -262,8 +265,6 @@ ServiceFabricBackup/
 *.rptproj.bak
 
 # SQL Server files
-*.mdf
-*.ldf
 *.ndf
 
 # Business Intelligence projects
