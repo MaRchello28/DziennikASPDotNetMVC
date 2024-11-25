@@ -16,10 +16,10 @@ namespace DziennikASPDotNetMVC.Models
         public TimeSpan hourTo { get; set; }
         public virtual ICollection<Lesson> lessons { get; set; }
         public int ClassScheduleId { get; set; }
-        public Teacher? replacement { get; set; }
+        public User? replacement { get; set; }
         public int sala { get; set; }
         public Session() { }
-        public Session(int subjectId, int teacherId, DayOfWeek dayOfTheWeek, TimeSpan hourFrom, TimeSpan hourTo, Teacher? replacement, int sala) 
+        public Session(int subjectId, int teacherId, DayOfWeek dayOfTheWeek, TimeSpan hourFrom, TimeSpan hourTo, User? replacement, int sala) 
         { 
             this.subjectId = subjectId; this.teacherId = teacherId; this.dayOfTheWeek = dayOfTheWeek; 
             this.hourFrom = hourFrom; this.hourTo = hourTo; this.replacement = replacement; lessons = new List<Lesson>();

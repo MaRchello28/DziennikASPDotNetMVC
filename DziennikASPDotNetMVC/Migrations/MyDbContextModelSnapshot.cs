@@ -22,16 +22,6 @@ namespace DziennikASPDotNetMVC.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DziennikASPDotNetMVC.Models.Admin", b =>
-                {
-                    b.Property<int>("adminId")
-                        .HasColumnType("int");
-
-                    b.HasKey("adminId");
-
-                    b.ToTable("Admins");
-                });
-
             modelBuilder.Entity("DziennikASPDotNetMVC.Models.Attendance", b =>
                 {
                     b.Property<int>("attendanceId")
@@ -108,8 +98,6 @@ namespace DziennikASPDotNetMVC.Migrations
 
                     b.HasKey("gradeId");
 
-                    b.HasIndex("studentId");
-
                     b.ToTable("Grades");
                 });
 
@@ -185,24 +173,6 @@ namespace DziennikASPDotNetMVC.Migrations
                     b.ToTable("Mails");
                 });
 
-            modelBuilder.Entity("DziennikASPDotNetMVC.Models.Parent", b =>
-                {
-                    b.Property<int>("parentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("phoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("parentId");
-
-                    b.ToTable("Parents");
-                });
-
             modelBuilder.Entity("DziennikASPDotNetMVC.Models.Session", b =>
                 {
                     b.Property<int>("sessionId")
@@ -223,6 +193,9 @@ namespace DziennikASPDotNetMVC.Migrations
                     b.Property<TimeSpan>("hourTo")
                         .HasColumnType("time");
 
+                    b.Property<int?>("replacementuserId")
+                        .HasColumnType("int");
+
                     b.Property<int>("sala")
                         .HasColumnType("int");
 
@@ -236,29 +209,9 @@ namespace DziennikASPDotNetMVC.Migrations
 
                     b.HasIndex("ClassScheduleId");
 
-                    b.HasIndex("teacherId");
+                    b.HasIndex("replacementuserId");
 
                     b.ToTable("Sessions");
-                });
-
-            modelBuilder.Entity("DziennikASPDotNetMVC.Models.Student", b =>
-                {
-                    b.Property<int>("studentId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("parentId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("studentClassId")
-                        .HasColumnType("int");
-
-                    b.HasKey("studentId");
-
-                    b.HasIndex("parentId");
-
-                    b.HasIndex("studentClassId");
-
-                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("DziennikASPDotNetMVC.Models.StudentClass", b =>
@@ -307,20 +260,6 @@ namespace DziennikASPDotNetMVC.Migrations
                     b.ToTable("Subjects");
                 });
 
-            modelBuilder.Entity("DziennikASPDotNetMVC.Models.Teacher", b =>
-                {
-                    b.Property<int>("teacherId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("teacherId");
-
-                    b.ToTable("Teachers");
-                });
-
             modelBuilder.Entity("DziennikASPDotNetMVC.Models.User", b =>
                 {
                     b.Property<int>("userId")
@@ -341,24 +280,22 @@ namespace DziennikASPDotNetMVC.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("studentClassId")
+                        .HasColumnType("int");
+
                     b.Property<string>("surname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("userId");
 
+                    b.HasIndex("studentClassId");
+
                     b.ToTable("User");
-                });
-
-            modelBuilder.Entity("DziennikASPDotNetMVC.Models.Admin", b =>
-                {
-                    b.HasOne("DziennikASPDotNetMVC.Models.User", "user")
-                        .WithOne()
-                        .HasForeignKey("DziennikASPDotNetMVC.Models.Admin", "adminId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("DziennikASPDotNetMVC.Models.Attendance", b =>
@@ -366,15 +303,6 @@ namespace DziennikASPDotNetMVC.Migrations
                     b.HasOne("DziennikASPDotNetMVC.Models.Lesson", null)
                         .WithMany("attendances")
                         .HasForeignKey("lessonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("DziennikASPDotNetMVC.Models.Grade", b =>
-                {
-                    b.HasOne("DziennikASPDotNetMVC.Models.Student", null)
-                        .WithMany("grades")
-                        .HasForeignKey("studentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -396,17 +324,6 @@ namespace DziennikASPDotNetMVC.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("DziennikASPDotNetMVC.Models.Parent", b =>
-                {
-                    b.HasOne("DziennikASPDotNetMVC.Models.User", "user")
-                        .WithOne()
-                        .HasForeignKey("DziennikASPDotNetMVC.Models.Parent", "parentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("user");
-                });
-
             modelBuilder.Entity("DziennikASPDotNetMVC.Models.Session", b =>
                 {
                     b.HasOne("DziennikASPDotNetMVC.Models.ClassSchedule", null)
@@ -415,43 +332,18 @@ namespace DziennikASPDotNetMVC.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DziennikASPDotNetMVC.Models.Teacher", "replacement")
-                        .WithMany("sessions")
-                        .HasForeignKey("teacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("DziennikASPDotNetMVC.Models.User", "replacement")
+                        .WithMany()
+                        .HasForeignKey("replacementuserId");
 
                     b.Navigation("replacement");
                 });
 
-            modelBuilder.Entity("DziennikASPDotNetMVC.Models.Student", b =>
+            modelBuilder.Entity("DziennikASPDotNetMVC.Models.User", b =>
                 {
-                    b.HasOne("DziennikASPDotNetMVC.Models.Parent", null)
-                        .WithMany("children")
-                        .HasForeignKey("parentId");
-
                     b.HasOne("DziennikASPDotNetMVC.Models.StudentClass", null)
                         .WithMany("students")
                         .HasForeignKey("studentClassId");
-
-                    b.HasOne("DziennikASPDotNetMVC.Models.User", "user")
-                        .WithOne()
-                        .HasForeignKey("DziennikASPDotNetMVC.Models.Student", "studentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("user");
-                });
-
-            modelBuilder.Entity("DziennikASPDotNetMVC.Models.Teacher", b =>
-                {
-                    b.HasOne("DziennikASPDotNetMVC.Models.User", "user")
-                        .WithOne()
-                        .HasForeignKey("DziennikASPDotNetMVC.Models.Teacher", "teacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("DziennikASPDotNetMVC.Models.ClassSchedule", b =>
@@ -464,29 +356,14 @@ namespace DziennikASPDotNetMVC.Migrations
                     b.Navigation("attendances");
                 });
 
-            modelBuilder.Entity("DziennikASPDotNetMVC.Models.Parent", b =>
-                {
-                    b.Navigation("children");
-                });
-
             modelBuilder.Entity("DziennikASPDotNetMVC.Models.Session", b =>
                 {
                     b.Navigation("lessons");
                 });
 
-            modelBuilder.Entity("DziennikASPDotNetMVC.Models.Student", b =>
-                {
-                    b.Navigation("grades");
-                });
-
             modelBuilder.Entity("DziennikASPDotNetMVC.Models.StudentClass", b =>
                 {
                     b.Navigation("students");
-                });
-
-            modelBuilder.Entity("DziennikASPDotNetMVC.Models.Teacher", b =>
-                {
-                    b.Navigation("sessions");
                 });
 
             modelBuilder.Entity("DziennikASPDotNetMVC.Models.User", b =>
