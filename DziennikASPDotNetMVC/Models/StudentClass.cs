@@ -14,13 +14,12 @@ namespace DziennikASPDotNetMVC.Models
         public string number {  get; set; }
         [MaxLength(1)]
         public string letter { get; set; }
-        public virtual ICollection <User> students { get; set; }
         public int teacherId { get; set; }
         public int? classScheduleId { get; set; }
         public StudentClass() { }
         public StudentClass(string number, string letter, int teacherId) 
         { 
-            students = new List<User>(); this.number = number; this.letter = letter; this.teacherId = teacherId;
+            this.number = number; this.letter = letter; this.teacherId = teacherId;
         }
     }
 }

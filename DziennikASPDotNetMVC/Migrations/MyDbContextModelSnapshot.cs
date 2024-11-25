@@ -280,9 +280,6 @@ namespace DziennikASPDotNetMVC.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("studentClassId")
-                        .HasColumnType("int");
-
                     b.Property<string>("surname")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -292,8 +289,6 @@ namespace DziennikASPDotNetMVC.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("userId");
-
-                    b.HasIndex("studentClassId");
 
                     b.ToTable("User");
                 });
@@ -339,13 +334,6 @@ namespace DziennikASPDotNetMVC.Migrations
                     b.Navigation("replacement");
                 });
 
-            modelBuilder.Entity("DziennikASPDotNetMVC.Models.User", b =>
-                {
-                    b.HasOne("DziennikASPDotNetMVC.Models.StudentClass", null)
-                        .WithMany("students")
-                        .HasForeignKey("studentClassId");
-                });
-
             modelBuilder.Entity("DziennikASPDotNetMVC.Models.ClassSchedule", b =>
                 {
                     b.Navigation("sessions");
@@ -359,11 +347,6 @@ namespace DziennikASPDotNetMVC.Migrations
             modelBuilder.Entity("DziennikASPDotNetMVC.Models.Session", b =>
                 {
                     b.Navigation("lessons");
-                });
-
-            modelBuilder.Entity("DziennikASPDotNetMVC.Models.StudentClass", b =>
-                {
-                    b.Navigation("students");
                 });
 
             modelBuilder.Entity("DziennikASPDotNetMVC.Models.User", b =>
