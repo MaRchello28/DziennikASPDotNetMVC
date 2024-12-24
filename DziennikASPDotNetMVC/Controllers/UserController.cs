@@ -15,26 +15,21 @@ namespace DziennikASPDotNetMVC.Controllers
         // GET: UserController
         public async Task<IActionResult> Index()
         {
-            // Pobranie listy użytkowników z bazy danych
             var users = await db.User.ToListAsync();
 
-            // Przekazanie danych do widoku
             return View(users);
         }
 
         // GET: UserController/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            // Pobranie użytkownika z bazy danych
             var user = await db.User.FirstOrDefaultAsync(u => u.userId == id);
 
-            // Sprawdzenie, czy użytkownik istnieje
             if (user == null)
             {
-                return NotFound(); // Zwrot kodu 404, jeśli nie znaleziono użytkownika
+                return NotFound();
             }
 
-            // Przekazanie użytkownika do widoku
             return View(user);
         }
         public IActionResult Create()
@@ -47,17 +42,14 @@ namespace DziennikASPDotNetMVC.Controllers
         {
             if (user.type == "admin")
             {
-                // Jeśli użytkownik to "admin", nie generujemy loginu ani hasła
                 if (string.IsNullOrEmpty(user.login) || string.IsNullOrEmpty(user.password))
                 {
-                    // Jeśli login lub hasło nie zostały podane, zwróć błąd
                     ModelState.AddModelError("", "Login i hasło są wymagane dla użytkownika typu 'admin'.");
                     return View(user);
                 }
             }
             else
             {
-                // Generowanie loginu i hasła, jeśli użytkownik nie jest adminem
                 user.login = (user.name.Substring(0, Math.Min(3, user.name.Length)) + user.surname).ToLower();
                 user.password = GenerateRandomPassword(15);
             }
