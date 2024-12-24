@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
 
 namespace DziennikASPDotNetMVC.Controllers
 {
@@ -44,25 +46,33 @@ namespace DziennikASPDotNetMVC.Controllers
 
                 if (user != null)
                 {
-                    if (user.type == "admin")
+                    HttpContext.Session.SetString("Username", user.login);
+                    HttpContext.Session.SetString("UserRole", user.type);
+
+                    var claims = new List<Claim>
                     {
-                        return RedirectToAction("AdminView", "HomeRoles");
-                    }
-                    else if (user.type == "student")
+                        new Claim(ClaimTypes.Name, user.login),
+                        new Claim(ClaimTypes.Role, user.type)
+                    };
+
+                    var identity = new ClaimsIdentity(claims, "SessionAuthentication");
+                    var principal = new ClaimsPrincipal(identity);
+
+                    HttpContext.SignInAsync("SessionAuthentication", principal);
+
+                    switch (user.type.ToLower())
                     {
-                        return RedirectToAction("StudentView", "HomeRoles");
-                    }
-                    else if (user.type == "parent")
-                    {
-                        return RedirectToAction("ParentView", "HomeRoles");
-                    }
-                    else if (user.type == "teacher")
-                    {
-                        return RedirectToAction("TeacherView", "HomeRoles");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Nieprawid這wa rola u篡tkownika.");
+                        case "admin":
+                            return RedirectToAction("AdminView", "HomeRoles");
+                        case "student":
+                            return RedirectToAction("StudentView", "HomeRoles");
+                        case "parent":
+                            return RedirectToAction("ParentView", "HomeRoles");
+                        case "teacher":
+                            return RedirectToAction("TeacherView", "HomeRoles");
+                        default:
+                            ModelState.AddModelError("", "Nieprawid這wa rola u篡tkownika.");
+                            break;
                     }
                 }
                 else
@@ -70,7 +80,6 @@ namespace DziennikASPDotNetMVC.Controllers
                     ModelState.AddModelError("", "Nieprawid這wy login lub has這.");
                 }
             }
-
             return View(model);
         }
     }

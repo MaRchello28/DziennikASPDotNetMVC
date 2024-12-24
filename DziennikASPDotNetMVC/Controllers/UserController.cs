@@ -1,10 +1,12 @@
 ﻿using DziennikASPDotNetMVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DziennikASPDotNetMVC.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class UserController : Controller
     {
         private readonly MyDbContext db;

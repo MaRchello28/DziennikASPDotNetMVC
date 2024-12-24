@@ -6,6 +6,19 @@ namespace DziennikASPDotNetMVC.Controllers
     {
         public IActionResult AdminView()
         {
+            var username = HttpContext.Session.GetString("Username");
+            var userRole = HttpContext.Session.GetString("UserRole");
+
+            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(userRole))
+            {
+                ViewData["Username"] = username;
+                ViewData["UserRole"] = userRole;
+            }
+            else
+            {
+                ViewData["Message"] = "Brak danych w sesji.";
+            }
+
             return View();
         }
 
