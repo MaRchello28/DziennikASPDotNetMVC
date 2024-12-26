@@ -6,22 +6,22 @@ namespace DziennikASPDotNetMVC.Controllers
 {
     public class SessionController : Controller
     {
-        private readonly MyDbContext _context; 
-        public SessionController(MyDbContext context)
+        private readonly MyDbContext db; 
+        public SessionController(MyDbContext db)
         {
-            this._context = context;
+            this.db = db;
         }
         // GET: Session
         public ActionResult Index()
         {
-            var sessions = _context.Sessions.Include("Lessons").ToList();
+            var sessions = db.Sessions.ToList();
             return View(sessions);
         }
 
         // GET: Session/Details/5
         public ActionResult Details(int id)
         {
-            var session = _context.Sessions.Find(id);
+            var session = db.Sessions.Find(id);
             if (session == null) return RedirectToAction("Index");
             return View(session);
         }
@@ -40,15 +40,15 @@ namespace DziennikASPDotNetMVC.Controllers
             session.hourFrom = TimeSpan.Parse(session.hourFrom.ToString());
             session.hourTo = TimeSpan.Parse(session.hourTo.ToString());
 
-            _context.Sessions.Add(session);
-            _context.SaveChanges();
+            db.Sessions.Add(session);
+            db.SaveChanges();
             return View(session);
         }
 
         // GET: Session/Edit/5
         public ActionResult Edit(int id)
         {
-            var session = _context.Sessions.Find(id);
+            var session = db.Sessions.Find(id);
             if (session == null) return RedirectToAction("Index");
             return View(session);
         }
@@ -60,8 +60,8 @@ namespace DziennikASPDotNetMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Entry(session).State = EntityState.Modified;
-                _context.SaveChanges();
+                db.Entry(session).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(session);
@@ -70,7 +70,7 @@ namespace DziennikASPDotNetMVC.Controllers
         // GET: Session/Delete/5
         public ActionResult Delete(int id)
         {
-            var session = _context.Sessions.Find(id);
+            var session = db.Sessions.Find(id);
             if (session == null) return RedirectToAction("Index");
             return View(session);
         }
@@ -80,9 +80,9 @@ namespace DziennikASPDotNetMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            var session = _context.Sessions.Find(id);
-            _context.Sessions.Remove(session);
-            _context.SaveChanges();
+            var session = db.Sessions.Find(id);
+            db.Sessions.Remove(session);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
     }

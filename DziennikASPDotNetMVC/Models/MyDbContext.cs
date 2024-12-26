@@ -12,7 +12,6 @@ namespace DziennikASPDotNetMVC.Models
         public DbSet<Mail> Mails { get; set; }
         public DbSet<StudentClass> StudentClasses { get; set; }
         public DbSet<Subject> Subjects { get; set; }
-        public DbSet<ClassSchedule> ClassSchedules { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
         {

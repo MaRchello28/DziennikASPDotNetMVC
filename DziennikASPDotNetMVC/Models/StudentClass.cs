@@ -15,7 +15,6 @@ namespace DziennikASPDotNetMVC.Models
         [MaxLength(1)]
         public string letter { get; set; }
         public int teacherId { get; set; }
-        public int? classScheduleId { get; set; }
         public StudentClass() { }
         public StudentClass(string number, string letter, int teacherId) 
         { 

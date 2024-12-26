@@ -15,7 +15,6 @@ namespace DziennikASPDotNetMVC.Models
         public TimeSpan hourFrom {  get; set; }
         public TimeSpan hourTo { get; set; }
         public virtual ICollection<Lesson> lessons { get; set; }
-        public int ClassScheduleId { get; set; }
         public User? replacement { get; set; }
         public int sala { get; set; }
         public Session() { }

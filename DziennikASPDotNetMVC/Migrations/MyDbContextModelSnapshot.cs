@@ -47,22 +47,6 @@ namespace DziennikASPDotNetMVC.Migrations
                     b.ToTable("Attendances");
                 });
 
-            modelBuilder.Entity("DziennikASPDotNetMVC.Models.ClassSchedule", b =>
-                {
-                    b.Property<int>("classScheduleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("classScheduleId"));
-
-                    b.Property<int>("studentClassId")
-                        .HasColumnType("int");
-
-                    b.HasKey("classScheduleId");
-
-                    b.ToTable("ClassSchedules");
-                });
-
             modelBuilder.Entity("DziennikASPDotNetMVC.Models.Grade", b =>
                 {
                     b.Property<int>("gradeId")
@@ -181,9 +165,6 @@ namespace DziennikASPDotNetMVC.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("sessionId"));
 
-                    b.Property<int>("ClassScheduleId")
-                        .HasColumnType("int");
-
                     b.Property<int>("dayOfTheWeek")
                         .HasColumnType("int");
 
@@ -207,8 +188,6 @@ namespace DziennikASPDotNetMVC.Migrations
 
                     b.HasKey("sessionId");
 
-                    b.HasIndex("ClassScheduleId");
-
                     b.HasIndex("replacementuserId");
 
                     b.ToTable("Sessions");
@@ -221,9 +200,6 @@ namespace DziennikASPDotNetMVC.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("studentClassId"));
-
-                    b.Property<int?>("classScheduleId")
-                        .HasColumnType("int");
 
                     b.Property<string>("letter")
                         .IsRequired()
@@ -321,22 +297,11 @@ namespace DziennikASPDotNetMVC.Migrations
 
             modelBuilder.Entity("DziennikASPDotNetMVC.Models.Session", b =>
                 {
-                    b.HasOne("DziennikASPDotNetMVC.Models.ClassSchedule", null)
-                        .WithMany("sessions")
-                        .HasForeignKey("ClassScheduleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("DziennikASPDotNetMVC.Models.User", "replacement")
                         .WithMany()
                         .HasForeignKey("replacementuserId");
 
                     b.Navigation("replacement");
-                });
-
-            modelBuilder.Entity("DziennikASPDotNetMVC.Models.ClassSchedule", b =>
-                {
-                    b.Navigation("sessions");
                 });
 
             modelBuilder.Entity("DziennikASPDotNetMVC.Models.Lesson", b =>

@@ -18,7 +18,6 @@
         <th>Day of Week</th>
         <th>Hour From</th>
         <th>Hour To</th>
-        <th>Class Schedule ID</th>
         <th>Sala</th>
         <th>Actions</th>
     </tr>
@@ -32,7 +31,6 @@
             <td>@Html.DisplayFor(modelItem => item.dayOfTheWeek)</td>
             <td>@Html.DisplayFor(modelItem => item.hourFrom)</td>
             <td>@Html.DisplayFor(modelItem => item.hourTo)</td>
-            <td>@Html.DisplayFor(modelItem => item.ClassScheduleId)</td>
             <td>@Html.DisplayFor(modelItem => item.sala)</td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.sessionId }) |

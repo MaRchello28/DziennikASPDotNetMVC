@@ -54,6 +54,8 @@ namespace DziennikASPDotNetMVC.Controllers
             {
                 user.login = (user.name.Substring(0, Math.Min(3, user.name.Length)) + user.surname).ToLower();
                 user.password = GenerateRandomPassword(15);
+                ModelState.Remove("login");
+                ModelState.Remove("password");
             }
 
             if (ModelState.IsValid)
