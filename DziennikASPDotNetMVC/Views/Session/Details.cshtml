@@ -1,0 +1,28 @@
+﻿@model DziennikASPDotNetMVC.Models.Session
+
+@{
+    ViewBag.Title = "Szczegóły sesji";
+}
+
+<h2>Szczegóły sesji</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Dane sesji</h5>
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>ID sesji:</strong> @Model.sessionId</p>
+                <p><strong>Przedmiot:</strong> @Model.subjectId</p>
+                <p><strong>Nauczyciel:</strong> @Model.teacherId</p>
+                <p><strong>Data:</strong> @Model.dayOfTheWeek</p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Godzina rozpoczęcia:</strong> @Model.hourFrom</p>
+                <p><strong>Godzina zakończenia:</strong> @Model.hourTo</p>
+                <p><strong>Sala:</strong> @Model.sala</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a asp-action="Index" class="btn btn-primary mt-3">Powrót do listy</a>

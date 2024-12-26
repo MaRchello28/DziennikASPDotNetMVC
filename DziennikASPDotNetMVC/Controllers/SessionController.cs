@@ -1,9 +1,11 @@
 ﻿using DziennikASPDotNetMVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DziennikASPDotNetMVC.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class SessionController : Controller
     {
         private readonly MyDbContext db; 
@@ -35,22 +37,28 @@ namespace DziennikASPDotNetMVC.Controllers
         // POST: Session/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Session session)
+        public ActionResult Create([Bind("sessionId, subjectId, teacherId, dayOfWeek, hourFrom, hourTo, replacement, sala")]Session session)
         {
-            session.hourFrom = TimeSpan.Parse(session.hourFrom.ToString());
-            session.hourTo = TimeSpan.Parse(session.hourTo.ToString());
+            ModelState.Remove("lessons");
 
-            db.Sessions.Add(session);
-            db.SaveChanges();
-            return View(session);
+            if (ModelState.IsValid)
+            {
+                db.Sessions.Add(session);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View();
         }
 
         // GET: Session/Edit/5
         public ActionResult Edit(int id)
         {
             var session = db.Sessions.Find(id);
-            if (session == null) return RedirectToAction("Index");
-            return View(session);
+            if (session == null)
+                return RedirectToAction("Index");
+            else
+                return View(session);
         }
 
         // POST: Session/Edit/5
@@ -58,6 +66,7 @@ namespace DziennikASPDotNetMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Session session)
         {
+            ModelState.Remove("lessons");
             if (ModelState.IsValid)
             {
                 db.Entry(session).State = EntityState.Modified;

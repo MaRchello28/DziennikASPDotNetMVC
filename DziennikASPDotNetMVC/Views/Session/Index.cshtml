@@ -1,42 +1,45 @@
 ﻿@model IEnumerable<DziennikASPDotNetMVC.Models.Session>
 
 @{
-    ViewBag.Title = "Sessions";
+    ViewBag.Title = "Lista sesji";
 }
 
-<h2>Sessions</h2>
+<h2>Lista sesji</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Session ID</th>
+            <th>Przedmiot</th>
+            <th>Nauczyciel</th>
+            <th>Dzień Tygodnia</th>
+            <th>Godzina rozpoczęcia</th>
+            <th>Godzina zakończenia</th>
+            <th>Sala</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var session in Model)
+        {
+            <tr>
+                <td>@session.sessionId</td>
+                <td>@session.subjectId</td> <!-- Optionally, replace with actual subject name -->
+                <td>@session.teacherId</td> <!-- Optionally, replace with teacher name -->
+                <td>@session.dayOfTheWeek</td>
+                <td>@session.hourFrom</td> <!-- Formatting the time -->
+                <td>@session.hourTo</td> <!-- Formatting the time -->
+                <td>@session.sala</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@session.sessionId" class="btn btn-info btn-sm">Szczegóły</a>
+                    <a asp-action="Edit" asp-route-id="@session.sessionId" class="btn btn-warning btn-sm">Edytuj</a>
+                    <a asp-action="Delete" asp-route-id="@session.sessionId" class="btn btn-danger btn-sm">Usuń</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a asp-action="Create" class="btn btn-success">Dodaj nową sesję</a>
 </p>
-
-<table class="table">
-    <tr>
-        <th>Session ID</th>
-        <th>Subject ID</th>
-        <th>Teacher ID</th>
-        <th>Day of Week</th>
-        <th>Hour From</th>
-        <th>Hour To</th>
-        <th>Sala</th>
-        <th>Actions</th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@Html.DisplayFor(modelItem => item.sessionId)</td>
-            <td>@Html.DisplayFor(modelItem => item.subjectId)</td>
-            <td>@Html.DisplayFor(modelItem => item.teacherId)</td>
-            <td>@Html.DisplayFor(modelItem => item.dayOfTheWeek)</td>
-            <td>@Html.DisplayFor(modelItem => item.hourFrom)</td>
-            <td>@Html.DisplayFor(modelItem => item.hourTo)</td>
-            <td>@Html.DisplayFor(modelItem => item.sala)</td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.sessionId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.sessionId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.sessionId })
-            </td>
-        </tr>
-    }
-</table>
