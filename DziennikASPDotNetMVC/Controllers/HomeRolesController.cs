@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DziennikASPDotNetMVC.Controllers
 {
     public class HomeRolesController : Controller
     {
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult AdminView()
         {
-            var username = HttpContext.Session.GetString("Username");
+            //To sprawdza czy sesja działa
+            var username = HttpContext.Session.GetString("UserId");
             var userRole = HttpContext.Session.GetString("UserRole");
 
             if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(userRole))
@@ -22,16 +25,19 @@ namespace DziennikASPDotNetMVC.Controllers
             return View();
         }
 
+        [Authorize(Policy = "StudentOnly")]
         public IActionResult StudentView()
         {
             return View();
         }
 
+        [Authorize(Policy = "ParentOnly")]
         public IActionResult ParentView()
         {
             return View();
         }
 
+        [Authorize(Policy = "TeacherOnly")]
         public IActionResult TeacherView()
         {
             return View();

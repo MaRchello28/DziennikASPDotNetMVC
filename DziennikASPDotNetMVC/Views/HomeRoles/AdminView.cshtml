@@ -12,23 +12,18 @@
         }
     </style>
 </head>
-<body>
-    <h1>Panel Admina</h1>
-    <h2>Welcome @ViewData["Username"]</h2>
-    <p>Your role is: @ViewData["UserRole"]</p>
 
-    @if (ViewData["Message"] != null)
-    {
-        <p>@ViewData["Message"]</p>
-    }
+<body>
+    <h1 style="text-align: center; margin-bottom: 20px;">Panel Admina</h1>
+
+    <div class="d-flex flex-column">
+        <a href="@Url.Action("Index", "User")" class="btn btn-primary btn-lg rounded mb-4">Zarządzaj użytkownikami</a>
+        <a href="@Url.Action("Index", "User")" class="btn btn-primary btn-lg rounded mb-4">Zarządzaj klasami</a>
+        <a href="@Url.Action("Index", "User")" class="btn btn-primary btn-lg rounded mb-4">Zarządzaj przedmiotami</a>
+        <a href="@Url.Action("Index", "User")" class="btn btn-primary btn-lg rounded mb-4">Zarządzaj sesjami</a>
+        <a href="@Url.Action("Index", "User")" class="btn btn-primary btn-lg rounded mb-4">Zarządzaj planami zajęć</a>
+        <a href="@Url.Action("Index", "User")" class="btn btn-primary btn-lg rounded mb-4">Przypisz uczniów do klasy</a>
+        <a href="@Url.Action("Index", "User")" class="btn btn-primary btn-lg rounded mb-4">Otwórz skrzynkę pocztową</a>
+        <a href="@Url.Action("Index", "User")" class="btn btn-primary btn-lg rounded mb-4">Przypisz przedmioty do klasy</a>
+    </div>
 </body>
-<div class="d-flex flex-column">
-    <a href="@Url.Action("Index", "User")" class="btn btn-primary btn-lg rounded mb-4">Zarządzaj użytkownikami</a>
-    <a href="@Url.Action("Index", "User")" class="btn btn-primary btn-lg rounded mb-4">Zarządzaj klasami</a>
-    <a href="@Url.Action("Index", "User")" class="btn btn-primary btn-lg rounded mb-4">Zarządzaj przedmiotami</a>
-    <a href="@Url.Action("Index", "User")" class="btn btn-primary btn-lg rounded mb-4">Zarządzaj sesjami</a>
-    <a href="@Url.Action("Index", "User")" class="btn btn-primary btn-lg rounded mb-4">Zarządzaj planami zajęć</a>
-    <a href="@Url.Action("Index", "User")" class="btn btn-primary btn-lg rounded mb-4">Przypisz uczniów do klasy</a>
-    <a href="@Url.Action("Index", "User")" class="btn btn-primary btn-lg rounded mb-4">Otwórz skrzynkę pocztową</a>
-    <a href="@Url.Action("Index", "User")" class="btn btn-primary btn-lg rounded mb-4">Przypisz przedmioty do klasy</a>
-</div>
