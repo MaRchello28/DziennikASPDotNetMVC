@@ -1,4 +1,5 @@
 ﻿using DziennikASPDotNetMVC.Models;
+using DziennikASPDotNetMVC.Models.LinkTable;
 using Microsoft.EntityFrameworkCore;
 
 namespace DziennikASPDotNetMVC.Models
@@ -13,6 +14,12 @@ namespace DziennikASPDotNetMVC.Models
         public DbSet<StudentClass> StudentClasses { get; set; }
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Session> Sessions { get; set; }
+
+        //Łącznikowe
+        public DbSet<StudentWithClass> StudentWithClasses { get; set; }
+        public DbSet<TeacherWithSubject> TeacherWithSubjects { get; set; }
+
+
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
         {
 

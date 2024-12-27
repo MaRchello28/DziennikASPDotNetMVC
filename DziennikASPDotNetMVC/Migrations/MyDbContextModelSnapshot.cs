@@ -117,6 +117,44 @@ namespace DziennikASPDotNetMVC.Migrations
                     b.ToTable("Lessons");
                 });
 
+            modelBuilder.Entity("DziennikASPDotNetMVC.Models.LinkTable.StudentWithClass", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<int>("studentClassId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("studentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.ToTable("StudentWithClasses");
+                });
+
+            modelBuilder.Entity("DziennikASPDotNetMVC.Models.LinkTable.TeacherWithSubject", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<int>("subjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("teacherId")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.ToTable("TeacherWithSubjects");
+                });
+
             modelBuilder.Entity("DziennikASPDotNetMVC.Models.Mail", b =>
                 {
                     b.Property<int>("mailId")

@@ -18,9 +18,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                    <button style="border: none; background: none; padding: 0; display: flex; align-items: center;">
-                        <img src="~/Images/Profile.png" alt="Logo" style="height: 40px; margin-left: 10px;">
-                    </button>
+                    <a href="@Url.Action("Index", "UserProfile")"><img src="~/Images/Profile.png" alt="Logo" style="height: 40px; margin-left: 10px;"></a>
                     <form asp-controller="Home" asp-action="Logout" method="post" style="display:inline;">
                         <button type="submit" class="btn btn-link nav-link" style="padding: 0; border: none; background: none;">
                             Wyloguj się
