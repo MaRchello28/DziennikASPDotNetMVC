@@ -37,9 +37,15 @@ namespace DziennikASPDotNetMVC.Controllers
         // POST: Session/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("sessionId, subjectId, teacherId, dayOfWeek, hourFrom, hourTo, replacement, sala")]Session session)
+        public ActionResult Create([Bind("sessionId, subjectId, teacherId, dayOfWeek, hourFrom, hourTo, sala")]Session session)
         {
             ModelState.Remove("lessons");
+
+            bool subjectExists = db.Subjects.Any(s => s.subjectId == session.subjectId);
+            bool teacherExists = db.User.Any(t => t.userId == session.teacherId && Equals(t.type,"teacher"));
+            bool correctDayOfWeek = session.dayOfTheWeek != DayOfWeek.Saturday && session.dayOfTheWeek == DayOfWeek.Sunday;
+            bool correctHourFrom = db.HoursForLessons.Any(h => h.hourFrom == session.hourFrom);
+            bool correctHourTo = db.HoursForLessons.Any(h => h.hourTo == session.hourTo);
 
             if (ModelState.IsValid)
             {

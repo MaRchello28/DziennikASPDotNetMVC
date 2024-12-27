@@ -15,13 +15,12 @@ namespace DziennikASPDotNetMVC.Models
         public TimeSpan hourFrom {  get; set; }
         public TimeSpan hourTo { get; set; }
         public virtual ICollection<Lesson> lessons { get; set; }
-        public User? replacement { get; set; }
         public int sala { get; set; }
         public Session() { }
-        public Session(int subjectId, int teacherId, DayOfWeek dayOfTheWeek, TimeSpan hourFrom, TimeSpan hourTo, User? replacement, int sala) 
+        public Session(int subjectId, int teacherId, DayOfWeek dayOfTheWeek, TimeSpan hourFrom, TimeSpan hourTo, int? replacement, int sala) 
         { 
             this.subjectId = subjectId; this.teacherId = teacherId; this.dayOfTheWeek = dayOfTheWeek; 
-            this.hourFrom = hourFrom; this.hourTo = hourTo; this.replacement = replacement; lessons = new List<Lesson>();
+            this.hourFrom = hourFrom; this.hourTo = hourTo; lessons = new List<Lesson>();
             this.sala = sala;
         }
         public Session(int subjectId, int teacherId, DayOfWeek dayOfTheWeek, TimeSpan hourFrom, TimeSpan hourTo, int sala)

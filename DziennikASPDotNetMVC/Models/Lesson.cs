@@ -15,12 +15,21 @@ namespace DziennikASPDotNetMVC.Models
         public DateTime date { get; set; }
         public virtual ICollection<Attendance> attendances { get; set; }
         public int sessionId { get; set; }
+        public int? replacementTeacherId { get; set; }
         public Lesson() { }
-        public Lesson(string name, string description, int numberOfLesson, int sessionId) 
+        public Lesson(string name, string description, int numberOfLesson, int sessionId, int replacement) 
         { 
             this.name = name; this.description = description;
             attendances = new List<Attendance>(); this.nuberOfLesson=numberOfLesson;
             this.sessionId = sessionId; date = DateTime.Now;
+            this.replacementTeacherId = replacement;
+        }
+        public Lesson(string name, string description, int numberOfLesson, int sessionId)
+        {
+            this.name = name; this.description = description;
+            attendances = new List<Attendance>(); this.nuberOfLesson = numberOfLesson;
+            this.sessionId = sessionId; date = DateTime.Now;
+            this.replacementTeacherId = null;
         }
     }
 }

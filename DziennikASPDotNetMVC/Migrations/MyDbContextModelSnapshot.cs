@@ -85,6 +85,25 @@ namespace DziennikASPDotNetMVC.Migrations
                     b.ToTable("Grades");
                 });
 
+            modelBuilder.Entity("DziennikASPDotNetMVC.Models.HoursForLessons", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<TimeSpan>("hourFrom")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("hourTo")
+                        .HasColumnType("time");
+
+                    b.HasKey("id");
+
+                    b.ToTable("HoursForLessons");
+                });
+
             modelBuilder.Entity("DziennikASPDotNetMVC.Models.Lesson", b =>
                 {
                     b.Property<int>("lessonId")
@@ -105,6 +124,9 @@ namespace DziennikASPDotNetMVC.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("nuberOfLesson")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("replacementTeacherId")
                         .HasColumnType("int");
 
                     b.Property<int>("sessionId")
@@ -212,9 +234,6 @@ namespace DziennikASPDotNetMVC.Migrations
                     b.Property<TimeSpan>("hourTo")
                         .HasColumnType("time");
 
-                    b.Property<int?>("replacementuserId")
-                        .HasColumnType("int");
-
                     b.Property<int>("sala")
                         .HasColumnType("int");
 
@@ -225,8 +244,6 @@ namespace DziennikASPDotNetMVC.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("sessionId");
-
-                    b.HasIndex("replacementuserId");
 
                     b.ToTable("Sessions");
                 });
@@ -331,15 +348,6 @@ namespace DziennikASPDotNetMVC.Migrations
                         .WithMany("messages")
                         .HasForeignKey("userId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("DziennikASPDotNetMVC.Models.Session", b =>
-                {
-                    b.HasOne("DziennikASPDotNetMVC.Models.User", "replacement")
-                        .WithMany()
-                        .HasForeignKey("replacementuserId");
-
-                    b.Navigation("replacement");
                 });
 
             modelBuilder.Entity("DziennikASPDotNetMVC.Models.Lesson", b =>
