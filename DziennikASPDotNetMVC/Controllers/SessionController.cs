@@ -31,6 +31,21 @@ namespace DziennikASPDotNetMVC.Controllers
         // GET: Session/Create
         public ActionResult Create()
         {
+            ViewBag.Subjects = db.Subjects.Select(s=> new { s.subjectId, s.name }).ToList();
+            ViewBag.Teachers = db.User
+                .Where(u => u.type == "teacher")
+                .Select(u => new {
+                    u.userId,
+                    u.name,
+                    u.surname,
+                    Subjects = db.TeacherWithSubjects
+                        .Where(tws => tws.teacherId == u.userId)
+                        .Join(db.Subjects, tws => tws.subjectId, s => s.subjectId, (tws, s) => s.name)
+                        .ToList()
+                })
+                .OrderBy(u => u.name)
+                .ThenBy(u => u.surname)
+                .ToList();
             return View();
         }
 
@@ -42,10 +57,39 @@ namespace DziennikASPDotNetMVC.Controllers
             ModelState.Remove("lessons");
 
             bool subjectExists = db.Subjects.Any(s => s.subjectId == session.subjectId);
-            bool teacherExists = db.User.Any(t => t.userId == session.teacherId && Equals(t.type,"teacher"));
-            bool correctDayOfWeek = session.dayOfTheWeek != DayOfWeek.Saturday && session.dayOfTheWeek == DayOfWeek.Sunday;
+            if (!subjectExists)
+            {
+                ModelState.AddModelError("subjectId", "Wybrany przedmiot nie istnieje");
+            }
+
+            bool teacherExists = db.User.Any(t => t.userId == session.teacherId && Equals(t.type, "teacher"));
+            if (!teacherExists)
+            {
+                ModelState.AddModelError("teacherId", "Musisz wybrać nauczyciela prowadzącego");
+            }
+
+            bool correctDayOfWeek = session.dayOfTheWeek == DayOfWeek.Saturday || session.dayOfTheWeek == DayOfWeek.Sunday;
+            if (!correctDayOfWeek)
+            {
+                ModelState.AddModelError("dayOfTheWeek", "W weekend zajęcia nie mogą się odbywać");
+            }
+
             bool correctHourFrom = db.HoursForLessons.Any(h => h.hourFrom == session.hourFrom);
+            if (!correctHourFrom)
+            {
+                ModelState.AddModelError("hourFrom", "Nie istnieje taka godzina rozpoczęcia zajęć");
+            }
+
             bool correctHourTo = db.HoursForLessons.Any(h => h.hourTo == session.hourTo);
+            if (!correctHourTo)
+            {
+                ModelState.AddModelError("hourTo", "Nie istnieje taka godzina końca zajęć");
+            }
+
+            if(session.sala == 0)
+            {
+                ModelState.AddModelError("hourTo", "Musisz wpisać sale");
+            }
 
             if (ModelState.IsValid)
             {
@@ -53,6 +97,20 @@ namespace DziennikASPDotNetMVC.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
+            ViewBag.Subjects = db.Subjects.Select(s => new { s.subjectId, s.name }).ToList();
+            ViewBag.Teachers = db.User
+                .Where(u => u.type == "teacher")
+                .Select(u => new {
+                    u.userId,
+                    u.name,
+                    u.surname,
+                    Subjects = db.TeacherWithSubjects
+                        .Where(tws => tws.teacherId == u.userId)
+                        .Join(db.Subjects, tws => tws.subjectId, s => s.subjectId, (tws, s) => s.name)
+                        .ToList()
+                })
+                .ToList();
 
             return View();
         }
