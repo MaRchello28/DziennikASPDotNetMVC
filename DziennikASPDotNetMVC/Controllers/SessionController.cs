@@ -49,10 +49,9 @@ namespace DziennikASPDotNetMVC.Controllers
             return View();
         }
 
-        // POST: Session/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("sessionId, subjectId, teacherId, dayOfWeek, hourFrom, hourTo, sala")]Session session)
+        public ActionResult Create([Bind("sessionId, subjectId, teacherId, dayOfTheWeek, hourFrom, hourTo, sala")] Session session)
         {
             ModelState.Remove("lessons");
 
@@ -69,7 +68,7 @@ namespace DziennikASPDotNetMVC.Controllers
             }
 
             bool correctDayOfWeek = session.dayOfTheWeek == DayOfWeek.Saturday || session.dayOfTheWeek == DayOfWeek.Sunday;
-            if (!correctDayOfWeek)
+            if (correctDayOfWeek)
             {
                 ModelState.AddModelError("dayOfTheWeek", "W weekend zajęcia nie mogą się odbywać");
             }
@@ -86,7 +85,7 @@ namespace DziennikASPDotNetMVC.Controllers
                 ModelState.AddModelError("hourTo", "Nie istnieje taka godzina końca zajęć");
             }
 
-            if(session.sala == 0)
+            if (session.sala == 0)
             {
                 ModelState.AddModelError("hourTo", "Musisz wpisać sale");
             }
@@ -118,6 +117,22 @@ namespace DziennikASPDotNetMVC.Controllers
         // GET: Session/Edit/5
         public ActionResult Edit(int id)
         {
+
+            ViewBag.Subjects = db.Subjects.Select(s => new { s.subjectId, s.name }).ToList();
+            ViewBag.Teachers = db.User
+                .Where(u => u.type == "teacher")
+                .Select(u => new {
+                    u.userId,
+                    u.name,
+                    u.surname,
+                    Subjects = db.TeacherWithSubjects
+                        .Where(tws => tws.teacherId == u.userId)
+                        .Join(db.Subjects, tws => tws.subjectId, s => s.subjectId, (tws, s) => s.name)
+                        .ToList()
+                })
+                .OrderBy(u => u.name)
+                .ThenBy(u => u.surname)
+                .ToList();
             var session = db.Sessions.Find(id);
             if (session == null)
                 return RedirectToAction("Index");
@@ -128,15 +143,64 @@ namespace DziennikASPDotNetMVC.Controllers
         // POST: Session/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Session session)
+        public ActionResult Edit([Bind("sessionId, subjectId, teacherId, dayOfTheWeek, hourFrom, hourTo, sala")] Session session)
         {
             ModelState.Remove("lessons");
+            bool subjectExists = db.Subjects.Any(s => s.subjectId == session.subjectId);
+            if (!subjectExists)
+            {
+                ModelState.AddModelError("subjectId", "Wybrany przedmiot nie istnieje");
+            }
+
+            bool teacherExists = db.User.Any(t => t.userId == session.teacherId && Equals(t.type, "teacher"));
+            if (!teacherExists)
+            {
+                ModelState.AddModelError("teacherId", "Musisz wybrać nauczyciela prowadzącego");
+            }
+
+            bool correctDayOfWeek = session.dayOfTheWeek == DayOfWeek.Saturday || session.dayOfTheWeek == DayOfWeek.Sunday;
+            if (correctDayOfWeek)
+            {
+                ModelState.AddModelError("dayOfTheWeek", "W weekend zajęcia nie mogą się odbywać");
+            }
+
+            bool correctHourFrom = db.HoursForLessons.Any(h => h.hourFrom == session.hourFrom);
+            if (!correctHourFrom)
+            {
+                ModelState.AddModelError("hourFrom", "Nie istnieje taka godzina rozpoczęcia zajęć");
+            }
+
+            bool correctHourTo = db.HoursForLessons.Any(h => h.hourTo == session.hourTo);
+            if (!correctHourTo)
+            {
+                ModelState.AddModelError("hourTo", "Nie istnieje taka godzina końca zajęć");
+            }
+
+            if (session.sala == 0)
+            {
+                ModelState.AddModelError("hourTo", "Musisz wpisać sale");
+            }
+
             if (ModelState.IsValid)
             {
-                db.Entry(session).State = EntityState.Modified;
+                db.Sessions.Update(session);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
+            ViewBag.Subjects = db.Subjects.Select(s => new { s.subjectId, s.name }).ToList();
+            ViewBag.Teachers = db.User
+                .Where(u => u.type == "teacher")
+                .Select(u => new {
+                    u.userId,
+                    u.name,
+                    u.surname,
+                    Subjects = db.TeacherWithSubjects
+                        .Where(tws => tws.teacherId == u.userId)
+                        .Join(db.Subjects, tws => tws.subjectId, s => s.subjectId, (tws, s) => s.name)
+                        .ToList()
+                })
+                .ToList();
             return View(session);
         }
 

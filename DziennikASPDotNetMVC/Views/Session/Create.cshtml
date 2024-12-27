@@ -53,9 +53,7 @@
                         {
                             foreach (var teacher in ViewBag.Teachers)
                             {
-                                // Połączenie przedmiotów nauczyciela w jeden ciąg tekstowy
                                 var subjects = string.Join(", ", teacher.Subjects);
-                                // Wyświetlanie imienia, nazwiska i przedmiotów
                                 <option value="@teacher.userId">@teacher.name @teacher.surname - @subjects</option>
                             }
                         }
@@ -72,13 +70,13 @@
         </div>
 
         <!-- Day of Week -->
-        <div class="form-group">
-            @Html.LabelFor(model => model.dayOfTheWeek, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.dayOfTheWeek, new SelectList(Enum.GetValues(typeof(DayOfWeek))), "Select Day", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.dayOfTheWeek, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.dayOfTheWeek, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.dayOfTheWeek, new SelectList(Enum.GetValues(typeof(DayOfWeek))), "Select Day", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.dayOfTheWeek, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
 
         <!-- Hour From -->
