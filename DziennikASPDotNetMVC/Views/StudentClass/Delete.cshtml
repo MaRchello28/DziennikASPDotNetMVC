@@ -1,0 +1,28 @@
+﻿@model DziennikASPDotNetMVC.Models.StudentClass
+
+@{
+    ViewBag.Title = "Delete StudentClass";
+}
+
+<h2>Delete StudentClass</h2>
+<h3>Are you sure you want to delete this?</h3>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>Class Number:</dt>
+        <dd>@Html.DisplayFor(model => model.number)</dd>
+
+        <dt>Class Letter:</dt>
+        <dd>@Html.DisplayFor(model => model.letter)</dd>
+
+        <dt>Teacher ID:</dt>
+        <dd>@Html.DisplayFor(model => model.teacherId)</dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
+    }
+</div>

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<DziennikASPDotNetMVC.Models.Mail>
+
+@{
+    ViewBag.Title = "Lista wiadomości";
+}
+
+<h2>Lista wiadomości</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Mail ID</th>
+            <th>Temat</th>
+            <th>Od</th>
+            <th>Do</th>
+            <th>Data wysłania</th>
+            <th>Status</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var mail in Model)
+        {
+            <tr>
+                <td>@mail.mailId</td>
+                <td>@mail.subject</td> <!-- Display the subject of the mail -->
+                <td>@mail.from</td> <!-- Display the sender -->
+                <td>@mail.to</td> <!-- Display the recipient -->
+                <td>@mail.send</td> <!-- Display the sent date -->
+                <td>@(mail.read ? "Przeczytana" : "Nieprzeczytana")</td> <!-- Display if the mail is read or unread -->
+                <td>
+                    <a asp-action="Details" asp-route-id="@mail.mailId" class="btn btn-info btn-sm">Szczegóły</a>
+                    <a asp-action="Edit" asp-route-id="@mail.mailId" class="btn btn-warning btn-sm">Edytuj</a>
+                    <a asp-action="Delete" asp-route-id="@mail.mailId" class="btn btn-danger btn-sm">Usuń</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Dodaj nową wiadomość</a>
+</p>
+

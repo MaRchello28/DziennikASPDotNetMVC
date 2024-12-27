@@ -1,0 +1,65 @@
+﻿@model DziennikASPDotNetMVC.Models.Mail
+
+@{
+    ViewBag.Title = "Edytuj wiadomość";
+}
+
+<h2>Edytuj wiadomość</h2>
+
+@using (Html.BeginForm("Edit", "Mail", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.mailId)
+
+        <!-- Subject -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.subject, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.subject)
+            </div>
+        </div>
+
+        <!-- From -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.from, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.from)
+            </div>
+        </div>
+
+        <!-- To -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.to, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.to)
+            </div>
+        </div>
+
+        <!-- Body -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.body, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.body, new { @class = "form-control", rows = 5 })
+            </div>
+        </div>
+
+        <!-- Read -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.read, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => model.read)
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Zapisz" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}

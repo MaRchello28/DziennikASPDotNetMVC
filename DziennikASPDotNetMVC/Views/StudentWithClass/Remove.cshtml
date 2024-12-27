@@ -1,0 +1,17 @@
+﻿@model DziennikASPDotNetMVC.Models.StudentWithClass
+
+@{
+    ViewBag.Title = "Remove Student from Class";
+}
+
+<h2>Remove Student from Class</h2>
+
+<h3>Are you sure you want to remove @Model.Student.name from the class @Model.StudentClass.number @Model.StudentClass.letter?</h3>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <button type="submit" class="btn btn-danger">Remove</button>
+    <a href="@Url.Action("Index", "StudentWithClass")" class="btn btn-secondary">Cancel</a>
+}

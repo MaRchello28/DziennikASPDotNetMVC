@@ -1,0 +1,24 @@
+﻿@model DziennikASPDotNetMVC.Models.StudentClass
+
+@{
+    ViewBag.Title = "Przypisz studenta do klasy";
+}
+
+<h2>Przypisz studenta do klasy @Model.number @Model.letter</h2>
+
+@using (Html.BeginForm("Assign", "StudentWithClass", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.studentClassId)
+
+    <div class="form-group">
+        @Html.Label("Wybierz studenta")
+        @Html.DropDownList("studentId", (SelectList)ViewBag.Students, "Wybierz studenta", new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-p  rimary">Przypisz</button>
+}
+
+<p>
+    <a asp-action="Index" asp-controller="StudentWithClass" class="btn btn-primary mt-3">Powrót do listy klas</a>
+</p>

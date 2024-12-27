@@ -1,0 +1,37 @@
+﻿@model DziennikASPDotNetMVC.Models.StudentClass
+
+@{
+    ViewBag.Title = "Szczegóły klasy";
+}
+
+<h2>Szczegóły klasy @Model.number @Model.letter</h2>
+
+<h3>Uczniowie:</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Imię i nazwisko</th>
+            <th>Akcja</th> <!-- Dodajemy kolumnę na akcje -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var studentWithClass in Model.StudentWithClasses)
+        {
+            <tr>
+                <td>@studentWithClass.Student.name @studentWithClass.Student.surname</td> <!-- Odwołujemy się do Student przez StudentWithClass -->
+                <td>
+                    <!-- Link do usunięcia ucznia -->
+                    @using (Html.BeginForm("Remove", "StudentWithClass", new { id = studentWithClass.studentId }, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger btn-sm">Usuń</button>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>
+    <a asp-action="Index" class="btn btn-primary">Powrót do listy klas</a>
+</p>

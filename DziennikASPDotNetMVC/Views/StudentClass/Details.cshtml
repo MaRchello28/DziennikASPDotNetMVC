@@ -1,0 +1,25 @@
+﻿@model DziennikASPDotNetMVC.Models.StudentClass
+
+@{
+    ViewBag.Title = "Szczegóły klasy";
+}
+
+<h2>Szczegóły klasy</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Dane klasy</h5>
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>ID klasy:</strong> @Model.studentClassId</p>
+                <p><strong>Numer klasy:</strong> @Model.number</p>
+                <p><strong>Litera klasy:</strong> @Model.letter</p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Nauczyciel ID:</strong> @Model.teacherId</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a asp-action="Index" class="btn btn-primary mt-3">Powrót do listy</a>

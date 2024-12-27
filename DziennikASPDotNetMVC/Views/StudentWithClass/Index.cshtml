@@ -1,0 +1,34 @@
+﻿@model IEnumerable<DziennikASPDotNetMVC.Models.StudentClass>
+
+@{
+    ViewBag.Title = "Lista klas";
+}
+
+<h2>Lista klas</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID Klasy</th>
+            <th>Numer</th>
+            <th>Litera</th>
+            <th>Nauczyciel</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var studentClass in Model)
+        {
+            <tr>
+                <td>@studentClass.studentClassId</td>
+                <td>@studentClass.number</td>
+                <td>@studentClass.letter</td>
+                <td>@studentClass.teacherId</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@studentClass.studentClassId" class="btn btn-info btn-sm">Szczegóły</a>
+                    <a asp-action="Assign" asp-route-id="@studentClass.studentClassId" class="btn btn-success btn-sm">Przypisz studenta</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
