@@ -29,6 +29,49 @@ namespace DziennikASPDotNetMVC.Controllers
             }
         }
 
+        [HttpPost]
+        public IActionResult EditField(string fieldName, string newValue)
+        {
+            if (string.IsNullOrWhiteSpace(newValue))
+            {
+                TempData["Error"] = "Pole nie może być puste.";
+                return RedirectToAction("Index");
+            }
+            var user = db.User.FirstOrDefault(u => u.userId == int.Parse(HttpContext.Session.GetString("UserId")));
+
+            if (user == null)
+            {
+                TempData["Error"] = "Nie znaleziono użytkownika.";
+                return RedirectToAction("Index");
+            }
+
+            switch (fieldName)
+            {
+                case "name":
+                    user.name = newValue;
+                    break;
+                case "surname":
+                    user.surname = newValue;
+                    break;
+                case "login":
+                    user.login = newValue;
+                    break;
+                case "password":
+                    if (newValue.Length < 6)
+                    {
+                        TempData["Error"] = "Hasło musi mieć co najmniej 6 znaków.";
+                        return RedirectToAction("Index");
+                    }
+                    user.password = newValue;
+                    break;
+            }
+
+            db.Update(user);
+            db.SaveChanges();
+            TempData["Success"] = "Dane zostały pomyślnie zaktualizowane.";
+            return RedirectToAction("Index");
+        }
+
         public string UserRole(int userId)
         {
             User user = db.User.FirstOrDefault(u => u.userId == userId);

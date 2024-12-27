@@ -4,9 +4,130 @@
     Twój profil
 </h1>
 
-<ol class="list-group list-group-flush text-center border">
-    <li class="list-group-item">Imie: @Model.name</li>
-    <li class="list-group-item">Nazwisko: @Model.surname</li>
-    <li class="list-group-item">Login: @Model.login</li>
-    <li class="list-group-item">Hasło: @Model.password</li>
+<!-- Większy odstęp między nagłówkiem a tabelką -->
+<ol class="list-group list-group-flush text-center border mx-auto mt-4" style="width: 50%">
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        Imię: @Model.name
+        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal"
+                onclick="openEditModal('Imię', '@Html.Raw(Model.name)', 'name')">
+            Edytuj
+        </button>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        Nazwisko: @Model.surname
+        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal"
+                onclick="openEditModal('Nazwisko', '@Html.Raw(Model.surname)', 'surname')">
+            Edytuj
+        </button>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        Login: @Model.login
+        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal"
+                onclick="openEditModal('Login', '@Html.Raw(Model.login)', 'login')">
+            Edytuj
+        </button>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        Hasło:
+        <span id="passwordDisplay" style="display: none;">@Model.password</span>
+        <span id="passwordMask">********</span>
+        <button class="btn btn-secondary btn-sm" onclick="togglePassword()" type="button">
+            Pokaż
+        </button>
+        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal"
+                onclick="openEditModal('Hasło', '@Html.Raw(Model.password)', 'password')">
+            Edytuj
+        </button>
+    </li>
 </ol>
+
+<!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="editForm" action="@Url.Action("EditField", "UserProfile")" method="post" onsubmit="return validatePassword();">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edytuj dane</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="fieldName" name="fieldName" />
+                    <div id="defaultField">
+                        <label for="newValue" class="form-label" id="fieldLabel">Nowa wartość:</label>
+                        <input type="text" class="form-control" id="newValue" name="newValue" required />
+                    </div>
+                    <div id="passwordFields" style="display: none;">
+                        <div class="mb-3">
+                            <label for="newPassword" class="form-label">Nowe hasło:</label>
+                            <input type="password" class="form-control" id="newPassword" name="newPassword" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Powtórz hasło:</label>
+                            <input type="password" class="form-control" id="confirmPassword" required />
+                        </div>
+                        <div id="passwordError" style="color: red; display: none;">
+                            Hasła muszą być takie same!
+                        </div>
+                        <div id="passwordSuccess" style="color: green; display: none;">
+                            Hasła są takie same!
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+                    <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openEditModal(label, currentValue, fieldName) {
+        document.getElementById('editModalLabel').textContent = `Edytuj ${label}`;
+        document.getElementById('fieldName').value = fieldName;
+
+        if (fieldName === 'password') {
+            document.getElementById('defaultField').style.display = 'none';
+            document.getElementById('passwordFields').style.display = 'block';
+            document.getElementById('passwordError').style.display = 'none';
+            document.getElementById('passwordSuccess').style.display = 'none';
+        } else {
+            document.getElementById('defaultField').style.display = 'block';
+            document.getElementById('passwordFields').style.display = 'none';
+            document.getElementById('newValue').value = currentValue;
+        }
+    }
+
+    function togglePassword() {
+        const passwordDisplay = document.getElementById('passwordDisplay');
+        const passwordMask = document.getElementById('passwordMask');
+        const isMasked = passwordMask.style.display !== 'none';
+
+        if (isMasked) {
+            passwordMask.style.display = 'none';
+            passwordDisplay.style.display = 'inline';
+        } else {
+            passwordMask.style.display = 'inline';
+            passwordDisplay.style.display = 'none';
+        }
+    }
+
+    function validatePassword() {
+        const fieldName = document.getElementById('fieldName').value;
+        if (fieldName === 'password') {
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (newPassword !== confirmPassword) {
+                document.getElementById('passwordError').style.display = 'block';
+                document.getElementById('passwordSuccess').style.display = 'none';
+                return false;
+            } else {
+                document.getElementById('passwordError').style.display = 'none';
+                document.getElementById('passwordSuccess').style.display = 'block';
+            }
+        }
+        return true;
+    }
+</script>

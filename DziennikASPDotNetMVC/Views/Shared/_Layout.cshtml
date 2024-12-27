@@ -21,14 +21,14 @@
 
                     <!-- Ikona Profilu -->
                     <a href="javascript:void(0);" onclick="toggleMenu()">
-                        <img src="~/Images/Profile.png" alt="Logo" style="height: 40px; margin-left: 10px; margin-right: 20px;">
+                        <img src="~/Images/Menu.png" alt="Logo" style="height: 40px; margin-left: 10px; margin-right: 20px;">
                     </a>
 
                     <!-- Przycisk Wylogowania -->
                     <form asp-controller="Home" asp-action="Logout" method="post" style="display:inline;">
-                        <button type="submit" class="btn btn-link nav-link" style="padding: 0; border: none; background: none;">
-                            Wyloguj się
-                        </button>
+                        <a href="javascript:void(0);" onclick="toggleMenu()">
+                            <img src="~/Images/Logout.png" alt="Logo" style="height: 40px; margin-left: 10px; margin-right: 20px;">
+                        </a>
                     </form>
                 </div>
             </div>
@@ -37,16 +37,22 @@
         <!-- Menu rozwijane -->
         <div class="row justify-content-end">
             <div class="col-auto">
-                <div id="profileMenu" style="display: none; position: absolute; top: 50px; right: 70px; z-index: 1000; background-color: white; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);">
+                <div id="profileMenu" style="display: none; position: absolute; top: 50px; right: 22px; z-index: 1000; background-color: white; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);">
                     <ul class="list-group" style="width: auto; min-width: 120px;">
                         <li class="list-group-item">
-                            <a href="@Url.Action("Index", "UserProfile")" class="btn btn-link">Profil</a>
+                            <a href="@Url.Action("Index", "UserProfile")" class="btn btn-link">
+                                <img src="/Images/Profile.png" alt="Profil" style="width: 20px; height: 20px; margin-right: 5px;"> Profil
+                            </a>
                         </li>
                         <li class="list-group-item">
-                            <button class="btn btn-link" disabled>Ustawienia</button>
+                            <button class="btn btn-link" disabled>
+                                <img src="/Images/Settings.png" alt="Ustawienia" style="width: 20px; height: 20px; margin-right: 5px;"> Ustawienia
+                            </button>
                         </li>
                         <li class="list-group-item">
-                            <button class="btn btn-link" disabled>Skrzynka pocztowa</button>
+                            <button class="btn btn-link" disabled>
+                                <img src="/Images/Mail.png" alt="Skrzynka pocztowa" style="width: 20px; height: 20px; margin-right: 5px;"> Skrzynka pocztowa
+                            </button>
                         </li>
                     </ul>
                 </div>
