@@ -24,11 +24,11 @@
         {
             <tr>
                 <td>@session.sessionId</td>
-                <td>@session.subjectId</td> <!-- Optionally, replace with actual subject name -->
-                <td>@session.teacherId</td> <!-- Optionally, replace with teacher name -->
+                <td>@session.subjectId</td>
+                <td>@session.teacherId</td>
                 <td>@session.dayOfTheWeek</td>
-                <td>@session.hourFrom</td> <!-- Formatting the time -->
-                <td>@session.hourTo</td> <!-- Formatting the time -->
+                <td>@session.hourFrom</td>
+                <td>@session.hourTo</td>
                 <td>@session.sala</td>
                 <td>
                     <a asp-action="Details" asp-route-id="@session.sessionId" class="btn btn-info btn-sm">Szczegóły</a>

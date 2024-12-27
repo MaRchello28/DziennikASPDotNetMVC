@@ -18,7 +18,24 @@
         <div class="form-group">
             @Html.LabelFor(model => model.subjectId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.subjectId)
+                <div class="input-group">
+                    @Html.TextBoxFor(model => model.subjectId, new { @class = "form-control", id = "subjectIdInput", placeholder = "Wpisz ID przedmiotu" })
+                    <select id="subjectDropdown" class="form-select" aria-label="Wybierz przedmiot">
+                        <option selected disabled>Wybierz przedmiot</option>
+                        @if (ViewBag.Subjects != null)
+                        {
+                            foreach (var subject in ViewBag.Subjects as IEnumerable<dynamic>)
+                            {
+                                <option value="@subject.subjectId">@subject.subjectId: @subject.name</option>
+                            }
+                        }
+                        else
+                        {
+                            @Html.ValidationMessageFor(model => model.subjectId, "", new { @class = "text-danger" })
+                        }
+                    </select>
+                </div>
+                @Html.ValidationMessageFor(model => model.subjectId, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -26,18 +43,40 @@
         <div class="form-group">
             @Html.LabelFor(model => model.teacherId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.teacherId)
+                <div class="input-group">
+                    @Html.TextBoxFor(model => model.teacherId, new { @class = "form-control", id = "teacherIdInput", placeholder = "Wpisz ID nauczyciela" })
+
+                    <select id="teacherDropdown" class="form-select" aria-label="Wybierz nauczyciela">
+                        <option selected disabled>Wybierz nauczyciela</option>
+
+                        @if (ViewBag.Teachers != null)
+                        {
+                            foreach (var teacher in ViewBag.Teachers)
+                            {
+                                var subjects = string.Join(", ", teacher.Subjects);
+                                <option value="@teacher.userId">@teacher.name @teacher.surname - @subjects</option>
+                            }
+                        }
+                        else
+                        {
+                            @Html.ValidationMessageFor(model => model.teacherId, "", new { @class = "text-danger" })
+                        }
+                    </select>
+                </div>
+
+                <!-- Walidacja -->
+                @Html.ValidationMessageFor(model => model.teacherId, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <!-- Day of Week -->
-        <div class="form-group">
-            @Html.LabelFor(model => model.dayOfTheWeek, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.dayOfTheWeek, new SelectList(Enum.GetValues(typeof(DayOfWeek))), "Select Day", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.dayOfTheWeek, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.dayOfTheWeek, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.dayOfTheWeek, new SelectList(Enum.GetValues(typeof(DayOfWeek))), "Select Day", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.dayOfTheWeek, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
 
         <!-- Hour From -->
@@ -64,6 +103,7 @@
             @Html.LabelFor(model => model.sala, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.sala)
+                @Html.ValidationMessageFor(model => model.sala, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -73,5 +113,19 @@
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </div>
+
+        <script>
+            document.getElementById('subjectDropdown').addEventListener('change', function () {
+                const selectedValue = this.value;
+                document.getElementById('subjectIdInput').value = selectedValue;
+            });
+        </script>
+
+        <script>
+            document.getElementById('teacherDropdown').addEventListener('change', function () {
+                const selectedValue = this.value;
+                document.getElementById('teacherIdInput').value = selectedValue;
+            });
+        </script>
     </div>
 }

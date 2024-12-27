@@ -18,7 +18,13 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                    <a href="@Url.Action("Index", "UserProfile")"><img src="~/Images/Profile.png" alt="Logo" style="height: 40px; margin-left: 10px;"></a>
+
+                    <!-- Ikona Profilu -->
+                    <a href="javascript:void(0);" onclick="toggleMenu()">
+                        <img src="~/Images/Profile.png" alt="Logo" style="height: 40px; margin-left: 10px; margin-right: 20px;">
+                    </a>
+
+                    <!-- Przycisk Wylogowania -->
                     <form asp-controller="Home" asp-action="Logout" method="post" style="display:inline;">
                         <button type="submit" class="btn btn-link nav-link" style="padding: 0; border: none; background: none;">
                             Wyloguj się
@@ -27,6 +33,25 @@
                 </div>
             </div>
         </nav>
+
+        <!-- Menu rozwijane -->
+        <div class="row justify-content-end">
+            <div class="col-auto">
+                <div id="profileMenu" style="display: none; position: absolute; top: 50px; right: 70px; z-index: 1000; background-color: white; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);">
+                    <ul class="list-group" style="width: auto; min-width: 120px;">
+                        <li class="list-group-item">
+                            <a href="@Url.Action("Index", "UserProfile")" class="btn btn-link">Profil</a>
+                        </li>
+                        <li class="list-group-item">
+                            <button class="btn btn-link" disabled>Ustawienia</button>
+                        </li>
+                        <li class="list-group-item">
+                            <button class="btn btn-link" disabled>Skrzynka pocztowa</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     }
 
     <div class="container">
@@ -40,9 +65,22 @@
             &copy; 2024 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById("profileMenu");
+            if (menu.style.display === "none" || menu.style.display === "") {
+                menu.style.display = "block";
+            } else {
+                menu.style.display = "none";
+            }
+        }
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
