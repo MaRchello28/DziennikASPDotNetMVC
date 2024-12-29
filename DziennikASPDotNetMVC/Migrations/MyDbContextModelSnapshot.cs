@@ -218,6 +218,9 @@ namespace DziennikASPDotNetMVC.Migrations
                     b.Property<int>("sala")
                         .HasColumnType("int");
 
+                    b.Property<int>("studentClassId")
+                        .HasColumnType("int");
+
                     b.Property<int>("subjectId")
                         .HasColumnType("int");
 
