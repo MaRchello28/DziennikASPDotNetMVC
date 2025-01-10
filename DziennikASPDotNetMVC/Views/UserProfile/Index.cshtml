@@ -7,35 +7,35 @@
 <!-- Większy odstęp między nagłówkiem a tabelką -->
 <ol class="list-group list-group-flush text-center border mx-auto mt-4" style="width: 50%">
     <li class="list-group-item d-flex justify-content-between align-items-center">
-        Imię: @Model.name
+        Imię: @Html.Encode(Model.name)
         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal"
-                onclick="openEditModal('Imię', '@Html.Raw(Model.name)', 'name')">
+                onclick="openEditModal('Imię', '@Html.Encode(Model.name)', 'name')">
             Edytuj
         </button>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
-        Nazwisko: @Model.surname
+        Nazwisko: @Html.Encode(Model.surname)
         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal"
-                onclick="openEditModal('Nazwisko', '@Html.Raw(Model.surname)', 'surname')">
+                onclick="openEditModal('Nazwisko', '@Html.Encode(Model.surname)', 'surname')">
             Edytuj
         </button>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
-        Login: @Model.login
+        Login: @Html.Encode(Model.login)
         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal"
-                onclick="openEditModal('Login', '@Html.Raw(Model.login)', 'login')">
+                onclick="openEditModal('Login', '@Html.Encode(Model.login)', 'login')">
             Edytuj
         </button>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
         Hasło:
-        <span id="passwordDisplay" style="display: none;">@Model.password</span>
+        <span id="passwordDisplay" style="display: none;">@Html.Encode(Model.password)</span>
         <span id="passwordMask">********</span>
-        <button class="btn btn-secondary btn-sm" onclick="togglePassword()" type="button">
+        <button id="togglePasswordBtn" class="btn btn-secondary btn-sm" onclick="togglePassword()" type="button">
             Pokaż
         </button>
         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal"
-                onclick="openEditModal('Hasło', '@Html.Raw(Model.password)', 'password')">
+                onclick="openEditModal('Hasło', '', 'password')">
             Edytuj
         </button>
     </li>
@@ -102,14 +102,17 @@
     function togglePassword() {
         const passwordDisplay = document.getElementById('passwordDisplay');
         const passwordMask = document.getElementById('passwordMask');
+        const passwordBtn = document.getElementById('togglePasswordBtn');
         const isMasked = passwordMask.style.display !== 'none';
 
         if (isMasked) {
             passwordMask.style.display = 'none';
             passwordDisplay.style.display = 'inline';
+            passwordBtn.textContent = 'Ukryj';
         } else {
             passwordMask.style.display = 'inline';
             passwordDisplay.style.display = 'none';
+            passwordBtn.textContent = 'Pokaż';
         }
     }
 
