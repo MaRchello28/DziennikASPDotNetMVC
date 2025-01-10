@@ -1,0 +1,30 @@
+﻿@model IEnumerable<DziennikASPDotNetMVC.Models.StudentClass>
+
+<h1>Wybierz klasę</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nazwa</th>
+            <th>Id wychowawcy</th>
+            <th>Wybierz</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var klasa in Model)
+        {
+            <tr>
+                <td>@klasa.studentClassId</td>
+                <td>@klasa.number@klasa.letter</td>
+                <td>@klasa.teacherId</td>
+                <td>
+                    <form asp-action="SelectStudents" method="get">
+                        <input type="hidden" name="id" value="@klasa.studentClassId" />
+                        <button type="submit" class="btn btn-success">Wybierz klasę</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

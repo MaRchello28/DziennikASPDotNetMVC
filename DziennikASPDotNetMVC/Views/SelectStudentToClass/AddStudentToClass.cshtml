@@ -1,0 +1,37 @@
+﻿@using DziennikASPDotNetMVC.Models.ForControllersOnly
+@model IEnumerable<StudentViewModel>
+
+<h1>Wybierz uczniów</h1>
+
+<form asp-action="SelectStudents" method="post">
+    <input type="hidden" name="classId" value="@ViewBag.classId" />
+    <p>Przypisujesz uczniów dla klasy o id: @ViewBag.classId</p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Imię</th>
+                <th>Nazwisko</th>
+                <th>Login</th>
+                <th>Zaznacz</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Model)
+            {
+                <tr>
+                    <td>@student.UserId</td>
+                    <td>@student.Name</td>
+                    <td>@student.Surname</td>
+                    <td>@student.Login</td>
+                    <td>
+                        <input type="checkbox" name="selectedStudents" value="@student.UserId"
+                        @(student.IsAssignedToClass ? "checked" : "") />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-primary">Zatwierdź</button>
+</form>
