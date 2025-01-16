@@ -15,7 +15,7 @@ i przez stronę – 4 pkt,
 • moduł obsługi pytań testowych definiowanych przez nauczyciela. Określenie czasu trwania
 testu, treści pytań oraz odpowiedzi, ilości punktów za poszczególne pytania. Ocena
 wystawiana automatycznie po zakończeniu testu – 6 pkt,
-• bezpieczna procedura przypominania i zmiany hasła – 2 pkt.
+• bezpieczna procedura przypominania i zmiany hasła – 2 pkt.	<--TO ROBIĘ
 • wybór skórek dla interfejsu użytkownika – 2 pkt. za dwie istotnie różne skórki i 1 pkt. za
 trzecią.
 • dodatkowe wersje językowe interfejsu użytkownika – 2 pkt. za pierwszy dodatkowy język i
@@ -24,3 +24,6 @@ trzecią.
 Do poprawy:
 • możliwość edycji danych osobowych uczniów, nauczycieli oraz rodziców w ramach ich
 profili użytkowników – 4 pkt, hasło nie działa
+
+dla użytkownika trzeba dodać, że jak wchodzi na swoje konto i nie ma przypisanego adresu email, 
+to musi wpisać i wtedy przypominanie hasła zmienić
