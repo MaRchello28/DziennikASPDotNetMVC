@@ -4,38 +4,36 @@
     Twój profil
 </h1>
 
-<!-- Większy odstęp między nagłówkiem a tabelką -->
 <ol class="list-group list-group-flush text-center border mx-auto mt-4" style="width: 50%">
     <li class="list-group-item d-flex justify-content-between align-items-center">
         Imię: @Html.Encode(Model.name)
         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal"
-                onclick="openEditModal('Imię', '@Html.Encode(Model.name)', 'name')">
+                onclick="openEditModal('Imię', '@Model.name', 'name')">
             Edytuj
         </button>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
         Nazwisko: @Html.Encode(Model.surname)
         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal"
-                onclick="openEditModal('Nazwisko', '@Html.Encode(Model.surname)', 'surname')">
+                onclick="openEditModal('Nazwisko', '@Model.surname', 'surname')">
             Edytuj
         </button>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
         Login: @Html.Encode(Model.login)
         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal"
-                onclick="openEditModal('Login', '@Html.Encode(Model.login)', 'login')">
+                onclick="openEditModal('Login', '@Model.login', 'login')">
             Edytuj
         </button>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
-        Hasło:
         <span id="passwordDisplay" style="display: none;">@Html.Encode(Model.password)</span>
         <span id="passwordMask">********</span>
         <button id="togglePasswordBtn" class="btn btn-secondary btn-sm" onclick="togglePassword()" type="button">
             Pokaż
         </button>
         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal"
-                onclick="openEditModal('Hasło', '', 'password')">
+                onclick="openEditModal('Hasło', '@Model.password', 'password')">
             Edytuj
         </button>
     </li>
@@ -53,17 +51,17 @@
                 <div class="modal-body">
                     <input type="hidden" id="fieldName" name="fieldName" />
                     <div id="defaultField">
-                        <label for="newValue" class="form-label" id="fieldLabel">Nowa wartość:</label>
-                        <input type="text" class="form-control" id="newValue" name="newValue" required />
+                        <label for="newValueField" class="form-label" id="fieldLabel">Nowa wartość:</label>
+                        <input type="text" class="form-control" id="newValueField" name="newValue" />
                     </div>
                     <div id="passwordFields" style="display: none;">
                         <div class="mb-3">
-                            <label for="newPassword" class="form-label">Nowe hasło:</label>
-                            <input type="password" class="form-control" id="newPassword" name="newPassword" required />
+                            <label for="newPasswordField" class="form-label">Nowe hasło:</label>
+                            <input type="password" class="form-control" id="newPasswordField" name="newPassword" />
                         </div>
                         <div class="mb-3">
-                            <label for="confirmPassword" class="form-label">Powtórz hasło:</label>
-                            <input type="password" class="form-control" id="confirmPassword" required />
+                            <label for="confirmPasswordField" class="form-label">Powtórz hasło:</label>
+                            <input type="password" class="form-control" id="confirmPasswordField" name="confirmPassword" />
                         </div>
                         <div id="passwordError" style="color: red; display: none;">
                             Hasła muszą być takie same!
@@ -92,10 +90,17 @@
             document.getElementById('passwordFields').style.display = 'block';
             document.getElementById('passwordError').style.display = 'none';
             document.getElementById('passwordSuccess').style.display = 'none';
+
+            // Zresetowanie wartości dla hasła, jeśli jest edytowane
+            document.getElementById('newPasswordField').value = '';  // Upewnij się, że pole dla nowego hasła jest puste
+            document.getElementById('confirmPasswordField').value = '';  // To samo dla confirmPasswordField
+
+            // Ustawienie newValueField na pusty ciąg w przypadku edycji hasła
+            document.getElementById('newValueField').value = ''; // Zawsze ustawiaj pustą wartość w przypadku edytowania hasła
         } else {
             document.getElementById('defaultField').style.display = 'block';
             document.getElementById('passwordFields').style.display = 'none';
-            document.getElementById('newValue').value = currentValue;
+            document.getElementById('newValueField').value = currentValue;  // Załadowanie obecnej wartości
         }
     }
 
@@ -119,18 +124,18 @@
     function validatePassword() {
         const fieldName = document.getElementById('fieldName').value;
         if (fieldName === 'password') {
-            const newPassword = document.getElementById('newPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
+            const newPassword = document.getElementById('newPasswordField').value;
+            const confirmPassword = document.getElementById('confirmPasswordField').value;
 
             if (newPassword !== confirmPassword) {
                 document.getElementById('passwordError').style.display = 'block';
                 document.getElementById('passwordSuccess').style.display = 'none';
-                return false;
+                return false; // Zatrzymuje wysyłanie formularza, jeśli hasła się różnią
             } else {
                 document.getElementById('passwordError').style.display = 'none';
                 document.getElementById('passwordSuccess').style.display = 'block';
             }
         }
-        return true;
+        return true; // Formularz jest poprawny, więc można go wysłać
     }
 </script>

@@ -59,9 +59,6 @@ namespace DziennikASPDotNetMVC.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("sessionId")
-                        .HasColumnType("int");
-
                     b.Property<int>("studentId")
                         .HasColumnType("int");
 

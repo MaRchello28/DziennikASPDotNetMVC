@@ -1,10 +1,6 @@
 ﻿Jak coś zrobione to usuwać linijkę
 
 Funkcjonalności:
-• tworzenie listy przedmiotów oraz przyporządkowywanie ich do różnych klas – 2 pkt,
-• dodawanie nauczycieli do przedmiotów oraz wychowawców dla klas – 2 pkt,
-• możliwość edycji danych osobowych uczniów, nauczycieli oraz rodziców w ramach ich
-profili użytkowników – 4 pkt,
 • przeglądanie zestawień ocen z zadanego okresu dla wybranych uczniów oraz przedmiotów
 – 2 pkt,
 • okresowe wysyłanie zestawień ocen uczniów na konto mailowe rodziców – 4 pkt,
@@ -24,3 +20,7 @@ wystawiana automatycznie po zakończeniu testu – 6 pkt,
 trzecią.
 • dodatkowe wersje językowe interfejsu użytkownika – 2 pkt. za pierwszy dodatkowy język i
 1 pkt. za drugi.
+
+Do poprawy:
+• możliwość edycji danych osobowych uczniów, nauczycieli oraz rodziców w ramach ich
+profili użytkowników – 4 pkt, hasło nie działa

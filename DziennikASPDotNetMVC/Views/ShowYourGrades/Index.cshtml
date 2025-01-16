@@ -1,0 +1,28 @@
+﻿@model List<DziennikASPDotNetMVC.Controllers.ShowStudentGradesModel>
+
+<h1 class="card-body">Twoje oceny</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Nazwa Przedmiotu</th>
+            <th scope="col">Oceny</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var subject in Model)
+        {
+            <tr>
+                <td>@subject.name</td>
+                <td>
+                    @foreach (Grade grade in subject.grades)
+                    {
+                        <span>@grade.value</span>
+
+                        <br />
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

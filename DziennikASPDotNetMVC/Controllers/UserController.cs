@@ -42,6 +42,7 @@ namespace DziennikASPDotNetMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind("name,surname,type,login,password")] User user)
         {
+
             if (user.type == "admin")
             {
                 if (string.IsNullOrEmpty(user.login) || string.IsNullOrEmpty(user.password))

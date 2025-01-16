@@ -2,6 +2,12 @@
 
 }
 
-<div>
-    <h1>To widok ucznia</h1>
-</div>
+<body>
+    <h1 style="text-align: center; margin-bottom: 20px;">Witaj Studencie</h1>
+
+    <div class="d-flex flex-column">
+        <a href="@Url.Action("Index", "ShowYourGrades")" class="btn btn-primary btn-lg rounded mb-4">Wyświetl swoje oceny</a>
+        <a href="@Url.Action("Index", "StudentClass")" class="btn btn-primary btn-lg rounded mb-4">Wybierz przedmiot</a>
+        <a href="@Url.Action("Index", "Subject")" class="btn btn-primary btn-lg rounded mb-4">Otwóz pocztę</a>
+    </div>
+</body>

@@ -107,6 +107,16 @@
             </div>
         </div>
 
+
+        <!-- IdKlasy -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.studentClassId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.studentClassId)
+                @Html.ValidationMessageFor(model => model.studentClassId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
         <!-- Submit Button -->
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

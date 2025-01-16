@@ -51,7 +51,7 @@ namespace DziennikASPDotNetMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("sessionId, subjectId, teacherId, dayOfTheWeek, hourFrom, hourTo, sala")] Session session)
+        public ActionResult Create([Bind("sessionId, subjectId, teacherId, dayOfTheWeek, hourFrom, hourTo, sala, studentClassId")] Session session)
         {
             ModelState.Remove("lessons");
 
@@ -85,9 +85,19 @@ namespace DziennikASPDotNetMVC.Controllers
                 ModelState.AddModelError("hourTo", "Nie istnieje taka godzina końca zajęć");
             }
 
-            if (session.sala == 0)
+            if (session.sala <= 0)
             {
-                ModelState.AddModelError("hourTo", "Musisz wpisać sale");
+                ModelState.AddModelError("sala", "Musisz wpisać sale");
+            }
+
+            if (session.studentClassId <= 0)
+            {
+                ModelState.AddModelError("StudentClass", "Musisz wpisać sale");
+            }
+
+            if (!db.StudentClasses.Any(s => s.studentClassId == session.studentClassId))
+            {
+                ModelState.AddModelError("StudentClass", "Nie istnieje id takiej klasy");
             }
 
             if (ModelState.IsValid)
