@@ -1,7 +1,6 @@
 ﻿using DziennikASPDotNetMVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using System.Net.Mail;
 using System.Net;
 using DziennikASPDotNetMVC.Models.ResetPasswordModels;
@@ -10,16 +9,20 @@ namespace DziennikASPDotNetMVC.Controllers
 {
     public class ForgotPasswordController : Controller
     {
-        MyDbContext db;
-        public ForgotPasswordController(MyDbContext db) 
-        { 
+        private readonly MyDbContext db;
+
+        public ForgotPasswordController(MyDbContext db)
+        {
             this.db = db;
         }
+
         public IActionResult Index()
         {
             return View();
         }
-        public async Task<IActionResult> ForgotPassword(Models.ResetPasswordModels.ForgotPassword model)
+
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(ForgotPassword model)
         {
             if (ModelState.IsValid)
             {
@@ -31,20 +34,18 @@ namespace DziennikASPDotNetMVC.Controllers
 
                     var callbackUrl = Url.Action(nameof(ResetPassword), "ForgotPassword", new { token, login = model.login }, Request.Scheme);
 
-                    await SendEmailAsync(model.email, "Reset Password",
-                        $"Please reset your password by clicking <a href='{callbackUrl}'>here</a>.");
+                    await SendEmailAsync(user.email, "Reset Password", $"Naciśnij, żeby zresetować hasło: <a href='{callbackUrl}'>Resetuj Hasło</a>");
 
                     return View("ForgotPasswordConfirmation");
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Nie znaleziono użytkownika z podanym loginem i adresem e-mail.");
+                    ModelState.AddModelError(string.Empty, "Nie znaleziono użytkownika z podanym loginem.");
                 }
             }
 
             return View(model);
         }
-
         private string GeneratePasswordResetToken(User user)
         {
             return Convert.ToBase64String(Guid.NewGuid().ToByteArray());
@@ -73,10 +74,9 @@ namespace DziennikASPDotNetMVC.Controllers
 
         public IActionResult ResetPassword(string token, string login)
         {
-            // Jeśli token lub email są null, zwróć błąd
             if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(login))
             {
-                return View();
+                return View("Error");
             }
             else
             {

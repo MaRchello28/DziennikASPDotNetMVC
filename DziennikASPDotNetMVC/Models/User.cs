@@ -21,6 +21,7 @@ namespace DziennikASPDotNetMVC.Models
 
         [RegularExpression("^(admin|student|teacher|parent)$", ErrorMessage = "Invalid user type.")]
         public string type { get; set; }
+        public string? email {  get; set; }
         public User() { }
         public User(string name, string surname, string login, string password, string type)
         {

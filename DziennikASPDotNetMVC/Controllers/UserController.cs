@@ -61,6 +61,7 @@ namespace DziennikASPDotNetMVC.Controllers
 
             if (ModelState.IsValid)
             {
+                user.email = null;
                 db.User.Add(user);
                 await db.SaveChangesAsync();
 
@@ -82,7 +83,7 @@ namespace DziennikASPDotNetMVC.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("userId,name,surname,login,password,type")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("userId,name,surname,login,password,type,email")] User user)
         {
             if (id != user.userId)
             {

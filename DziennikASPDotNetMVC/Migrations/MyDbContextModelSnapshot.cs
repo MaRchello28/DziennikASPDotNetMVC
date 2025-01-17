@@ -303,6 +303,9 @@ namespace DziennikASPDotNetMVC.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("userId"));
 
+                    b.Property<string>("email")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("login")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

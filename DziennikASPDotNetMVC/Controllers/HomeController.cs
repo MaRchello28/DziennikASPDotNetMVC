@@ -89,10 +89,10 @@ namespace DziennikASPDotNetMVC.Controllers
                     HttpContext.Session.SetString("UserRole", user.type);
 
                     var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, user.userId.ToString()),
-                    new Claim(ClaimTypes.Role, user.type)
-                };
+            {
+                new Claim(ClaimTypes.Name, user.userId.ToString()),
+                new Claim(ClaimTypes.Role, user.type)
+            };
 
                     var identity = new ClaimsIdentity(claims, "SessionAuthentication");
                     var principal = new ClaimsPrincipal(identity);
@@ -102,6 +102,12 @@ namespace DziennikASPDotNetMVC.Controllers
                     ViewData["UserLogged"] = true;
 
                     _logger.LogInformation($"U¿ytkownik {user.login} zalogowa³ siê jako {user.type}.");
+
+                    if (string.IsNullOrWhiteSpace(user.email))
+                    {
+                        ViewData["EmailRequired"] = true;
+                        return RedirectToAction("EnterEmail"); // Zmiana na przekierowanie do EnterEmail
+                    }
 
                     switch (user.type.ToLower())
                     {
@@ -124,7 +130,6 @@ namespace DziennikASPDotNetMVC.Controllers
                 }
             }
 
-            ViewData["UserLogged"] = false;
             return View(model);
         }
 
@@ -139,6 +144,34 @@ namespace DziennikASPDotNetMVC.Controllers
             ViewData["UserLogged"] = false;
 
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult EnterEmail()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult SubmitEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email) || !new EmailAddressAttribute().IsValid(email))
+            {
+                ModelState.AddModelError("email", "Proszê podaæ prawid³owy adres email.");
+                return View("EnterEmail");
+            }
+
+            var userId = HttpContext.Session.GetString("UserId");
+            if (userId != null)
+            {
+                var user = db.User.FirstOrDefault(u => u.userId.ToString() == userId);
+                if (user != null)
+                {
+                    user.email = email;
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            return RedirectToAction("Login", "UserProfile");
         }
     }
 }

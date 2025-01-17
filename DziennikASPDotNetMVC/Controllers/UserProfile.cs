@@ -1,6 +1,7 @@
 ﻿using DziennikASPDotNetMVC.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 
 namespace DziennikASPDotNetMVC.Controllers
 {
@@ -37,6 +38,7 @@ namespace DziennikASPDotNetMVC.Controllers
                 TempData["Error"] = "Pole nie może być puste.";
                 return RedirectToAction("Index");
             }
+
             var user = db.User.FirstOrDefault(u => u.userId == int.Parse(HttpContext.Session.GetString("UserId")));
 
             if (user == null)
@@ -64,12 +66,27 @@ namespace DziennikASPDotNetMVC.Controllers
                     }
                     user.password = newValue;
                     break;
+                case "email":
+                    // Walidacja email
+                    if (!IsValidEmail(newValue))
+                    {
+                        TempData["Error"] = "Podany adres email jest nieprawidłowy.";
+                        return RedirectToAction("Index");
+                    }
+                    user.email = newValue;
+                    break;
             }
 
             db.Update(user);
             db.SaveChanges();
             TempData["Success"] = "Dane zostały pomyślnie zaktualizowane.";
             return RedirectToAction("Index");
+        }
+
+        private bool IsValidEmail(string email)
+        {
+            var emailRegex = new Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$");
+            return emailRegex.IsMatch(email);
         }
 
         public string UserRole(int userId)

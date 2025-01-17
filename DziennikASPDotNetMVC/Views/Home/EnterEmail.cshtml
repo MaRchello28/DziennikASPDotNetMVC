@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Podaj Email";
+}
+
+<div class="container">
+    <div class="text-center">
+        <h4 class="display-4">Najprawdopodobniej logujesz się pierwszy raz i potrzebujemy twojego adresu email</h4>
+    </div>
+
+    <div class="form-container">
+        <div class="card">
+            <div class="card-header text-center">
+                <h4>Adres Email</h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="SubmitEmail" method="post">
+                    <div class="form-group">
+                        <label for="email" class="control-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required />
+                    </div>
+                    <div class="form-group mt-4 text-center">
+                        <button type="submit" class="btn btn-primary">Zapisz Email</button>
+                    </div>
+                </form>
+
+                @if (ViewData["EmailRequired"] != null && (bool)ViewData["EmailRequired"])
+                {
+                    <div class="alert alert-warning mt-3">
+                        <strong>Uwaga!</strong> Proszę podać adres email, aby kontynuować.
+                    </div>
+                }
+
+                @* Wyświetlanie błędów walidacji w formularzu *@
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
