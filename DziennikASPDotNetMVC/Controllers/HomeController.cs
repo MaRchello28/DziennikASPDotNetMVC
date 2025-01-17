@@ -23,6 +23,13 @@ namespace DziennikASPDotNetMVC.Controllers
 
         public IActionResult Index()
         {
+            var latestAnnouncements = db.Announcements
+                .OrderByDescending(a => a.whenUpload)
+                .Take(2)
+                .ToList();
+
+            ViewData["LatestAnnouncements"] = latestAnnouncements;
+
             if (User.Identity?.IsAuthenticated == true)
             {
                 var userRole = HttpContext.Session.GetString("UserRole");

@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "E-Dziennik";
+    var latestAnnouncements = (List<DziennikASPDotNetMVC.Models.Announcement>)ViewData["LatestAnnouncements"];
 }
 
 <style>
@@ -15,26 +16,32 @@
 
     .full-page {
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
+        justify-content: space-between; /* Rozmieszczenie elementów obok siebie */
+        width: 100%;
+        max-width: 1200px; /* Ustal maksymalną szerokość strony */
     }
 
     .form-container {
         width: 100%;
         max-width: 600px;
+        margin-right: 20px; /* Odstęp między formularzem a ogłoszeniami */
+    }
+
+    .announcement-section {
+        width: 100%;
+        max-width: 500px; /* Ustal maksymalną szerokość sekcji ogłoszeń */
     }
 
     .card {
         padding: 20px;
     }
+
+    .announcement-card {
+        margin-bottom: 20px; /* Odstęp między ogłoszeniami */
+    }
 </style>
 
 <div class="full-page">
-    <div class="text-center">
-        <h1 class="display-4">E-Dziennik</h1>
-    </div>
-
     <div class="form-container">
         <div class="card">
             <div class="card-header text-center">
@@ -68,35 +75,24 @@
             </div>
         </div>
     </div>
-</div>
 
-<!-- Modal do wprowadzenia emaila -->
-@if (ViewData["EmailRequired"] != null && (bool)ViewData["EmailRequired"])
-{
-    <div class="modal fade" id="emailModal" tabindex="-1" aria-labelledby="emailModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="emailModalLabel">Podaj swój email</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    @if (latestAnnouncements != null && latestAnnouncements.Any())
+    {
+        <div class="announcement-section">
+            <h3>Ostatnie Ogłoszenia</h3>
+            @foreach (var announcement in latestAnnouncements)
+            {
+                <div class="announcement-card card">
+                    <div class="card-body">
+                        <h5 class="card-title">@announcement.title</h5>
+                        <p class="card-text">@announcement.description</p>
+                        <p class="card-text"><small class="text-muted">Data ogłoszenia: @announcement.whenUpload.ToString("dd.MM.yyyy")</small></p>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <form asp-action="UpdateEmail" method="post">
-                        <div class="mb-3">
-                            <label for="Email" class="form-label">Email</label>
-                            <input type="email" class="form-control" name="Email" required />
-                        </div>
-                        <button type="submit" class="btn btn-primary">Zapisz email</button>
-                    </form>
-                </div>
+            }
+            <div class="text-center mt-4">
+                <a href="@Url.Action("Index", "Announcement")" class="btn btn-primary">Przejdź do ogłoszeń</a>
             </div>
         </div>
-    </div>
-
-    <script>
-        // Pokazuje modal po załadowaniu strony
-        $(document).ready(function () {
-            $('#emailModal').modal('show');
-        });
-    </script>
-}
+    }
+</div>

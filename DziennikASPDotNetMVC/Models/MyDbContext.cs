@@ -6,6 +6,7 @@ namespace DziennikASPDotNetMVC.Models
 {
     public class MyDbContext:DbContext
     {
+        public DbSet<Announcement> Announcements { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<Grade> Grades { get; set; }

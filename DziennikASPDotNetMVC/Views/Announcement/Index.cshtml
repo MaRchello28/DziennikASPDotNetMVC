@@ -1,0 +1,33 @@
+﻿@model List<DziennikASPDotNetMVC.Models.Announcement>
+
+<h3 class="text-center">Wszystkie Ogłoszenia</h3>
+
+<div class="container">
+    <div class="d-flex flex-column align-items-center">
+        @foreach (var announcement in Model)
+        {
+            <div class="card mb-3" style="max-width: 540px; width: 100%;">
+                <div class="row g-0">
+                    <!-- Kolumna z obrazkiem -->
+                    <div class="col-md-4">
+                        <img src="@((announcement.image != null && announcement.image.Length > 0) ?
+                                    Url.Action("GetImage", "Announcement", new { id = announcement.id }) :
+                                    "/Images/DefaultAnnouncement.png")"
+                             class="img-fluid rounded-start" alt="Ogłoszenie obrazek">
+                    </div>
+
+                    <!-- Kolumna z treścią ogłoszenia -->
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">@announcement.title</h5>
+                            <p class="card-text">@announcement.description</p>
+                            <p class="card-text">
+                                <small class="text-muted">Data: @announcement.whenUpload.ToString("dd.MM.yyyy")</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,34 @@
+﻿@model DziennikASPDotNetMVC.Models.Announcement
+
+@{
+    ViewData["Title"] = "Utwórz Ogłoszenie";
+}
+
+<h3>Utwórz Ogłoszenie</h3>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="title" class="control-label">Tytuł</label>
+        <input asp-for="title" class="form-control" />
+        <span asp-validation-for="title" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="description" class="control-label">Opis</label>
+        <textarea asp-for="description" class="form-control"></textarea>
+        <span asp-validation-for="description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Obrazek (opcjonalnie)</label>
+        <input type="file" name="image" class="form-control" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary mt-3">Utwórz</button>
+    </div>
+</form>
+
+<!-- Walidacja formularza -->
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

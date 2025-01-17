@@ -22,6 +22,36 @@ namespace DziennikASPDotNetMVC.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("DziennikASPDotNetMVC.Models.Announcement", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("image")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<int>("teacherId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("whenUpload")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Announcements");
+                });
+
             modelBuilder.Entity("DziennikASPDotNetMVC.Models.Attendance", b =>
                 {
                     b.Property<int>("attendanceId")
