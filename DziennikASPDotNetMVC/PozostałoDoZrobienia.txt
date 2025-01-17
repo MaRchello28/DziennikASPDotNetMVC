@@ -8,17 +8,14 @@ Funkcjonalności:
 widoczne po zalogowaniu – 4 pkt,
 • wysyłanie ogłoszeń przez wychowawców do rodziców danej klasy zarówno przez email, jak
 i przez stronę – 4 pkt,
-• lista ogłoszeń na głównej stronie serwisu – 2 pkt,  <<----To Robię
-10
 • możliwość dodawania plików przez nauczycieli do poszczególnych przedmiotów – 2 pkt,
 • umieszczanie treści kształcenia przyporządkowanych do przedmiotów – 2 pkt,
 • moduł obsługi pytań testowych definiowanych przez nauczyciela. Określenie czasu trwania
 testu, treści pytań oraz odpowiedzi, ilości punktów za poszczególne pytania. Ocena
-wystawiana automatycznie po zakończeniu testu – 6 pkt,
+wystawiana automatycznie po zakończeniu testu – 6 pkt,  <<------To Robię
 • wybór skórek dla interfejsu użytkownika – 2 pkt. za dwie istotnie różne skórki i 1 pkt. za
 trzecią.
 • dodatkowe wersje językowe interfejsu użytkownika – 2 pkt. za pierwszy dodatkowy język i
 1 pkt. za drugi.
-
 
 Do poprawy:
