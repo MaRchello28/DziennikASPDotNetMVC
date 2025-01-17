@@ -19,3 +19,4 @@ trzecią.
 1 pkt. za drugi.
 
 Do poprawy:
+Wyskoczenie błędu przy złym wpisaniu loginu lub hasłą podczas logowania
