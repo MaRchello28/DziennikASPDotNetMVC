@@ -1,0 +1,39 @@
+﻿@model IEnumerable<DziennikASPDotNetMVC.Models.Question>
+
+<h2 class="text-center">Pytania dla quizu: @ViewBag.Quiz.name</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Pytanie</th>
+            <th>Odpowiedź A</th>
+            <th>Odpowiedź B</th>
+            <th>Odpowiedź C</th>
+            <th>Odpowiedź D</th>
+            <th>Prawidłowa Odpowiedź</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var question in Model)
+        {
+            <tr>
+                <td>@question.questionId</td>
+                <td>@question.question</td>
+                <td>@question.answerA</td>
+                <td>@question.answerB</td>
+                <td>@question.answerC</td>
+                <td>@question.answerD</td>
+                <td>@question.correctAnswer</td>
+                <td>
+                    <a asp-action="EditQuestion" asp-route-id="@question.questionId" class="btn btn-warning">Edytuj</a>
+                    <a asp-action="DeleteQuestion" asp-route-id="@question.questionId" class="btn btn-danger">Usuń</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="CreateQuestion" asp-route-quizId="@ViewBag.Quiz.quizId" class="btn btn-success">Dodaj nowe pytanie</a>
+

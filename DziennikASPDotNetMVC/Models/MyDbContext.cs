@@ -1,5 +1,6 @@
 ﻿using DziennikASPDotNetMVC.Models;
 using DziennikASPDotNetMVC.Models.LinkTable;
+using DziennikASPDotNetMVC.Models.LinkTables;
 using Microsoft.EntityFrameworkCore;
 
 namespace DziennikASPDotNetMVC.Models
@@ -16,10 +17,13 @@ namespace DziennikASPDotNetMVC.Models
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<HoursForLessons> HoursForLessons { get; set; }
+        public DbSet<Quiz> Quizzes { get; set; }
+        public DbSet<Question> Questions { get; set; }
 
         //Łącznikowe
         public DbSet<StudentWithClass> StudentWithClasses { get; set; }
         public DbSet<TeacherWithSubject> TeacherWithSubjects { get; set; }
+        public DbSet<QuizAndSelectedClass> QuizAndSelectedClasseses { get; set; }
 
 
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)

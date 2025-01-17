@@ -1,0 +1,26 @@
+﻿@model IEnumerable<DziennikASPDotNetMVC.Models.Quiz>
+
+<h2 class="text-center">Wybierz Quiz</h2>
+
+<div class="container">
+    <div class="row">
+        @foreach (var quiz in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">@quiz.name</h5>
+                        <p class="card-text">Czas na rozwiązanie: @quiz.timeToWriteQuiz</p>
+                        <p class="card-text">Maksymalna liczba punktów: @quiz.maxPoints</p>
+                        <p class="card-text">Generować ocenę: @(quiz.generateGrade ? "Tak" : "Nie")</p>
+                        <a href="@Url.Action("SelectClass", "Quiz", new { quizId = quiz.quizId })" class="btn btn-primary">Przypisz quiz dla klas</a>
+                        <a href="@Url.Action("ManageQuizClasses", "Quiz", new { quizId = quiz.quizId })" class="btn btn-primary">Zobacz przypisane klasy</a>
+                        <a href="@Url.Action("ManageQuestions", "Quiz", new { quizId = quiz.quizId })" class="btn btn-primary">Zarządzaj pytaniami</a>
+                        <a href="@Url.Action("DeleteQuiz", "Quiz", new { id = quiz.quizId })" class="btn btn-danger">Usuń Quiz</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <a href="@Url.Action("Create", "Quiz")" class="btn btn-primary">Stwórz Quiz</a>
+</div>

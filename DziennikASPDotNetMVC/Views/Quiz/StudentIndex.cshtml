@@ -1,0 +1,27 @@
+﻿@model IEnumerable<DziennikASPDotNetMVC.Models.LinkTables.QuizAndSelectedClass>
+
+<h3>Quizy dostępne dla Ciebie</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nazwa Quizu</th>
+            <th>Dostępny od</th>
+            <th>Dostępny do</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.quiz.name</td>
+                <td>@item.availableFrom?.ToString("yyyy-MM-dd HH:mm")</td>
+                <td>@item.availableTo?.ToString("yyyy-MM-dd HH:mm")</td>
+                <td>
+                    <a href="@Url.Action("StartQuiz", new { quizId = item.quizId })" class="btn btn-primary">Rozpocznij Quiz</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

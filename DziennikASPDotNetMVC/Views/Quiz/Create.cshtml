@@ -1,0 +1,39 @@
+﻿@model DziennikASPDotNetMVC.Models.Quiz
+
+@{
+    ViewData["Title"] = "Utwórz Quiz";
+}
+
+<h3>Utwórz Quiz</h3>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="name" class="control-label">Nazwa Quizu</label>
+        <input asp-for="name" class="form-control" />
+        <span asp-validation-for="name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="timeToWriteQuiz" class="control-label">Czas na wykonanie hh:mm</label>
+        <input asp-for="timeToWriteQuiz" class="form-control" type="time" />
+        <span asp-validation-for="timeToWriteQuiz" class="text-danger"></span>
+    </div>
+
+    <div class="form-group form-check">
+        <label class="form-check-label" for="generateGrade">
+            Generować ocenę?
+        </label>
+        <input asp-for="generateGrade" class="form-check-input" type="checkbox" />
+        <span asp-validation-for="generateGrade" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="SubjectId" class="control-label">Wybierz Przedmiot</label>
+        <select asp-for="subjectId" class="form-control" asp-items="ViewBag.Subjects"></select>
+        <span asp-validation-for="subjectId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Utwórz Quiz</button>
+    </div>
+</form>

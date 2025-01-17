@@ -36,9 +36,9 @@ namespace DziennikASPDotNetMVC.Controllers
                 int id = int.Parse(studentId);
                 int loggedInStudentClassId = GetLoggedInStudentClassId(id);
                 subjects = db.Subjects
-                     .Where(subject => db.Sessions
-                                         .Any(session => session.subjectId == subject.subjectId && session.studentClassId == loggedInStudentClassId))
-                     .ToList();
+                .Where(subject => db.Sessions
+                .Any(session => session.subjectId == subject.subjectId && session.studentClassId == loggedInStudentClassId))
+                .ToList();
                 foreach(Subject subject in subjects)
                 {
                     List<Grade> grades = db.Grades.Where(g => g.subjectId == subject.subjectId && g.studentId == id).ToList();

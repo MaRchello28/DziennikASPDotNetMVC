@@ -185,6 +185,31 @@ namespace DziennikASPDotNetMVC.Migrations
                     b.ToTable("TeacherWithSubjects");
                 });
 
+            modelBuilder.Entity("DziennikASPDotNetMVC.Models.LinkTables.QuizAndSelectedClass", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("availableFrom")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("availableTo")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("quizId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("studentClassId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("QuizAndSelectedClasseses");
+                });
+
             modelBuilder.Entity("DziennikASPDotNetMVC.Models.Mail", b =>
                 {
                     b.Property<int>("mailId")
@@ -223,6 +248,81 @@ namespace DziennikASPDotNetMVC.Migrations
                     b.HasIndex("userId");
 
                     b.ToTable("Mails");
+                });
+
+            modelBuilder.Entity("DziennikASPDotNetMVC.Models.Question", b =>
+                {
+                    b.Property<int>("questionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("questionId"));
+
+                    b.Property<string>("answerA")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("answerB")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("answerC")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("answerD")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("correctAnswer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("points")
+                        .HasColumnType("int");
+
+                    b.Property<string>("question")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("quizId")
+                        .HasColumnType("int");
+
+                    b.HasKey("questionId");
+
+                    b.ToTable("Questions");
+                });
+
+            modelBuilder.Entity("DziennikASPDotNetMVC.Models.Quiz", b =>
+                {
+                    b.Property<int>("quizId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("quizId"));
+
+                    b.Property<bool>("generateGrade")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("maxPoints")
+                        .HasColumnType("int");
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("subjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("teacherId")
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan?>("timeToWriteQuiz")
+                        .HasColumnType("time");
+
+                    b.HasKey("quizId");
+
+                    b.ToTable("Quizzes");
                 });
 
             modelBuilder.Entity("DziennikASPDotNetMVC.Models.Session", b =>

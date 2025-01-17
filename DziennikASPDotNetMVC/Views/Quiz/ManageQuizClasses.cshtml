@@ -1,0 +1,29 @@
+﻿@model IEnumerable<DziennikASPDotNetMVC.Models.LinkTables.QuizAndSelectedClass>
+
+<h3>Przypisane Klasy do Quizu</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nazwa Klasy</th>
+            <th>Dostępny od</th>
+            <th>Dostępny do</th>
+            <th>Akcja</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.studentClassId</td>
+                <td>@item.availableFrom?.ToString("yyyy-MM-dd HH:mm")</td>
+                <td>@item.availableTo?.ToString("yyyy-MM-dd HH:mm")</td>
+                <td>
+                    <form method="post" asp-action="DeleteQuizClass" asp-route-id="@item.Id" onsubmit="return confirm('Czy na pewno chcesz usunąć przypisanie?');">
+                        <button type="submit" class="btn btn-danger">Usuń przypisanie</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

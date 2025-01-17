@@ -1,0 +1,62 @@
+﻿@model DziennikASPDotNetMVC.Models.Question
+
+@{
+    ViewData["Title"] = "Edytuj Pytanie";
+}
+
+<h3>Edytuj Pytanie</h3>
+
+<form asp-action="EditQuestion" method="post">
+    <input type="hidden" asp-for="questionId" />
+    <div class="form-group">
+        <label asp-for="question" class="control-label">Pytanie</label>
+        <input asp-for="question" class="form-control" />
+        <span asp-validation-for="question" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="answerA" class="control-label">Odpowiedź A</label>
+        <input asp-for="answerA" class="form-control" />
+        <span asp-validation-for="answerA" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="answerB" class="control-label">Odpowiedź B</label>
+        <input asp-for="answerB" class="form-control" />
+        <span asp-validation-for="answerB" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="answerC" class="control-label">Odpowiedź C</label>
+        <input asp-for="answerC" class="form-control" />
+        <span asp-validation-for="answerC" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="answerD" class="control-label">Odpowiedź D</label>
+        <input asp-for="answerD" class="form-control" />
+        <span asp-validation-for="answerD" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="correctAnswer" class="control-label">Prawidłowa Odpowiedź</label>
+        <input asp-for="correctAnswer" class="form-control" />
+        <span asp-validation-for="correctAnswer" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="points" class="control-label">Punkty</label>
+        <input asp-for="points" class="form-control" />
+        <span asp-validation-for="points" class="text-danger"></span>
+    </div>
+
+    <input type="hidden" asp-for="quizId" />
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Zapisz Zmiany</button>
+    </div>
+</form>
+
+<div>
+    <a asp-action="ManageQuestions" asp-route-quizId="@Model.quizId">Powrót do zarządzania pytaniami</a>
+</div>

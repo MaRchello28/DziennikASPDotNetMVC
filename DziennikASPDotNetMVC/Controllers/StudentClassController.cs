@@ -36,7 +36,7 @@ namespace DziennikASPDotNetMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind("number, letter, teacherId")] StudentClass studentClass)
         {
-            ModelState.Remove("classes");
+            ModelState.Remove("StudentWithClasses");
 
             bool studentClassExist = db.StudentClasses.Any(s => s.studentClassId == studentClass.studentClassId);
             bool teacherExists = db.User.Any(t => t.userId == studentClass.teacherId && Equals(t.type, "teacher"));

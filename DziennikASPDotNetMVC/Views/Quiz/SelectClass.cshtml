@@ -1,0 +1,36 @@
+﻿@model IEnumerable<DziennikASPDotNetMVC.Models.StudentClass>
+
+@{
+    ViewData["Title"] = "Wybierz Klasę dla Quizu";
+}
+
+<h3>Wybierz Klasę dla Quizu</h3>
+
+<form asp-action="AssignClassToQuiz" method="post">
+    <!-- Ukryte pole z quizId -->
+    <input type="hidden" name="quizId" value="@ViewBag.QuizId" />
+
+    <div class="form-group">
+        <label for="studentClassId" class="control-label">Wybierz Klasę</label>
+        <select name="studentClassId" class="form-control">
+            @foreach (var studentClass in Model)
+            {
+                <option value="@studentClass.studentClassId">@studentClass.number @studentClass.letter</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="availableFrom" class="control-label">Dostępny od</label>
+        <input type="datetime-local" name="availableFrom" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="availableTo" class="control-label">Dostępny do</label>
+        <input type="datetime-local" name="availableTo" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Przypisz Klasę</button>
+    </div>
+</form>

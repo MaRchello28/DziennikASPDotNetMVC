@@ -1,0 +1,57 @@
+﻿@model DziennikASPDotNetMVC.Models.Question
+
+@{
+    ViewData["Title"] = "Utwórz Pytanie";
+}
+
+<h3>Utwórz Pytanie</h3>
+
+<form asp-action="CreateQuestion" method="post">
+    <input type="hidden" asp-for="quizId" />
+
+    <div class="form-group">
+        <label asp-for="question" class="control-label">Pytanie: </label>
+        <input asp-for="question" class="form-control" />
+        <span asp-validation-for="question" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="answerA" class="control-label">Odpowiedź A: </label>
+        <input asp-for="answerA" class="form-control" />
+        <span asp-validation-for="answerA" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="answerB" class="control-label">Odpowiedź B: </label>
+        <input asp-for="answerB" class="form-control" />
+        <span asp-validation-for="answerB" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="answerC" class="control-label">Odpowiedź C: </label>
+        <input asp-for="answerC" class="form-control" />
+        <span asp-validation-for="answerC" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="answerD" class="control-label">Odpowiedź D: </label>
+        <input asp-for="answerD" class="form-control" />
+        <span asp-validation-for="answerD" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="correctAnswer" class="control-label">Odpowiedź Prawidłowa: </label>
+        <input asp-for="correctAnswer" class="form-control" />
+        <span asp-validation-for="correctAnswer" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="points" class="control-label">Ile punktów: </label>
+        <input asp-for="points" class="form-control" />
+        <span asp-validation-for="points" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Dodaj Pytanie</button>
+    </div>
+</form>
