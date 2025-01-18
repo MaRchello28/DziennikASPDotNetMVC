@@ -3,15 +3,22 @@
 Funkcjonalności:
 • przeglądanie zestawień ocen z zadanego okresu dla wybranych uczniów oraz przedmiotów
 – 2 pkt,
+
 • okresowe wysyłanie zestawień ocen uczniów na konto mailowe rodziców – 4 pkt,
+
 • wysyłanie zapytań do nauczycieli poprzez konta rodziców. Zapytania oraz odpowiedzi
 widoczne po zalogowaniu – 4 pkt,
+
 • wysyłanie ogłoszeń przez wychowawców do rodziców danej klasy zarówno przez email, jak
 i przez stronę – 4 pkt,	<----- To Robię
+
 • możliwość dodawania plików przez nauczycieli do poszczególnych przedmiotów – 2 pkt,
+
 • umieszczanie treści kształcenia przyporządkowanych do przedmiotów – 2 pkt,
+
 • wybór skórek dla interfejsu użytkownika – 2 pkt. za dwie istotnie różne skórki i 1 pkt. za
 trzecią.
+
 • dodatkowe wersje językowe interfejsu użytkownika – 2 pkt. za pierwszy dodatkowy język i
 1 pkt. za drugi.
 
