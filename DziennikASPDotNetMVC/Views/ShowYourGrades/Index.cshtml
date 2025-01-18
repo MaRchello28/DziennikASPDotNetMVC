@@ -18,8 +18,10 @@
                     @foreach (Grade grade in subject.grades)
                     {
                         <span>@grade.value</span>
-
-                        <br />
+                        @if (grade != subject.grades.Last())
+                        {
+                            <span>, </span>
+                        }
                     }
                 </td>
             </tr>

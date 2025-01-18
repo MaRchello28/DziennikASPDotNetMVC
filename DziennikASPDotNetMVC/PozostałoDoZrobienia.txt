@@ -16,10 +16,6 @@ trzecią.
 1 pkt. za drugi.
 
 Do poprawy:
-Wyskoczenie błędu przy złym wpisaniu loginu lub hasłą podczas logowania
-
 Wysłanie email. Date ma pobrać DateTime.Now oraz from domyślnie zalogowany user
 
 Zarządzanie klasami nie działa. Create naprawiłem. Zostało Edit, Delete
-
-Wyświetlanie ocen uczniów do poprawy oceny muszą być w rządku po przecinku, a nie pod sobą

@@ -137,7 +137,7 @@ namespace DziennikASPDotNetMVC.Controllers
                 }
             }
 
-            return View(model);
+            return RedirectToAction("Index", "Home");
         }
 
         // Logout action
