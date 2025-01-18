@@ -12,13 +12,12 @@ namespace DziennikASPDotNetMVC.Models
         public string subject { get; set; }
         public string body { get; set; }
         public string from { get; set; }
-        public string to { get; set; }
-        public bool read { get; set; } = false;
+        public int toClassId { get; set; }
         public DateTime send {  get; set; }
         public Mail() { }
-        public Mail(string subject, string body, string from, string to) 
+        public Mail(string subject, string body, string from, int toClassId) 
         { 
-            this.subject = subject; this.from = from; this.to = to; this.body = body;
+            this.subject = subject; this.from = from; this.toClassId = toClassId; this.body = body;
         }
     }
 }

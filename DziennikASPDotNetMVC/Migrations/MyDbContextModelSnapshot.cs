@@ -207,6 +207,8 @@ namespace DziennikASPDotNetMVC.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("quizId");
+
                     b.ToTable("QuizAndSelectedClasseses");
                 });
 
@@ -226,9 +228,6 @@ namespace DziennikASPDotNetMVC.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("read")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("send")
                         .HasColumnType("datetime2");
 
@@ -236,9 +235,8 @@ namespace DziennikASPDotNetMVC.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("to")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("toClassId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("userId")
                         .HasColumnType("int");
@@ -482,6 +480,17 @@ namespace DziennikASPDotNetMVC.Migrations
                         .HasForeignKey("sessionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DziennikASPDotNetMVC.Models.LinkTables.QuizAndSelectedClass", b =>
+                {
+                    b.HasOne("DziennikASPDotNetMVC.Models.Quiz", "quiz")
+                        .WithMany()
+                        .HasForeignKey("quizId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("quiz");
                 });
 
             modelBuilder.Entity("DziennikASPDotNetMVC.Models.Mail", b =>

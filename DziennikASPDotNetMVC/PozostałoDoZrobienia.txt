@@ -23,6 +23,4 @@ trzecią.
 1 pkt. za drugi.
 
 Do poprawy:
-Wysłanie email. Date ma pobrać DateTime.Now oraz from domyślnie zalogowany user
-
 Zarządzanie klasami nie działa. Create naprawiłem. Zostało Edit, Delete
