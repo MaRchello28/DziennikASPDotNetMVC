@@ -1,0 +1,67 @@
+﻿@model ShowGradesViewModel
+
+@{
+    ViewData["Title"] = "Wybór uczniów i przedmiotów";
+}
+
+<h2>Wybór uczniów i przedmiotów</h2>
+
+<form method="post" action="@Url.Action("ShowGrades", "ShowGradesTeacher")">
+    <!-- Tabela uczniów -->
+    <h3>Wybierz uczniów</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Zaznacz</th>
+                <th>Uczeń</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Model.Students)
+            {
+                <tr>
+                    <td><input type="checkbox" name="SelectedStudents" value="@student.userId" /></td>
+                    <td>@student.name @student.surname</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <br />
+
+    <!-- Tabela przedmiotów -->
+    <h3>Wybierz przedmioty</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Zaznacz</th>
+                <th>Przedmiot</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var subject in Model.Subjects)
+            {
+                <tr>
+                    <td><input type="checkbox" name="SelectedSubjects" value="@subject.subjectId" /></td>
+                    <td>@subject.name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <br />
+
+    <!-- Daty -->
+    <div>
+        <label for="startDate">Data początkowa:</label>
+        <input type="date" id="startDate" name="startDate" required />
+    </div>
+
+    <div>
+        <label for="endDate">Data końcowa:</label>
+        <input type="date" id="endDate" name="endDate" required />
+    </div>
+
+    <br />
+    <button type="submit">Pokaż oceny</button>
+</form>
