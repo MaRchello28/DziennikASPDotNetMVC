@@ -1,0 +1,35 @@
+﻿@model IEnumerable<DziennikASPDotNetMVC.Models.Mail>
+
+@{
+    ViewBag.Title = "Lista wiadomości";
+}
+
+<h2>Lista wiadomości</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Mail ID</th>
+            <th>Temat</th>
+            <th>Od</th>
+            <th>Do</th>
+            <th>Data wysłania</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var mail in Model)
+        {
+            <tr>
+                <td>@mail.mailId</td>
+                <td>@mail.subject</td>
+                <td>@mail.from</td>
+                <td>@mail.toClassId</td>
+                <td>@mail.send</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@mail.mailId" class="btn btn-info btn-sm">Szczegóły</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

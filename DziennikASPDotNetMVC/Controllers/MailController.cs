@@ -1,6 +1,8 @@
 ﻿using DziennikASPDotNetMVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Mail;
+using System.Net;
 
 namespace DziennikASPDotNetMVC.Controllers
 {
@@ -22,6 +24,35 @@ namespace DziennikASPDotNetMVC.Controllers
             return View(mails);
         }
 
+        public ActionResult ParentIndex()
+        {
+            List<Mail> mails = new List<Mail>();
+            List<StudentClass> classes = new List<StudentClass>();
+
+            var username = HttpContext.Session.GetString("UserId");
+            if (int.TryParse(username, out int id))
+            {
+                var kids = db.parentWithKids
+                     .Where(p => p.parentId == id)
+                     .Select(p => p.studentId)
+                     .ToList();
+
+                var classIds = db.StudentWithClasses
+                                 .Where(sc => kids.Contains(sc.studentId))
+                                 .Select(sc => sc.studentClassId)
+                                 .Distinct()
+                                 .ToList();
+
+                mails = db.Mails
+                          .Where(m => classIds.Contains(m.toClassId))
+                          .ToList();
+
+
+            }
+
+            return View(mails);
+        }
+
         // GET: Mail/Details/5
         public ActionResult Details(int id)
         {
@@ -39,7 +70,7 @@ namespace DziennikASPDotNetMVC.Controllers
         // POST: Mail/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("subject, body, toClassId")] Mail mail)
+        public async Task<ActionResult> Create([Bind("subject, body, toClassId")] Mail mail)
         {
             ModelState.Remove("from");
             if (ModelState.IsValid)
@@ -51,10 +82,52 @@ namespace DziennikASPDotNetMVC.Controllers
                 mail.send = DateTime.Now;
                 db.Mails.Add(mail);
                 db.SaveChanges();
+
+                // Pobierz rodziców przypisanych do klasy
+                var parentEmails = db.parentWithKids
+                                     .Join(db.StudentWithClasses,
+                                           pwk => pwk.studentId,
+                                           swc => swc.studentId,
+                                           (pwk, swc) => new { pwk.parentId, swc.studentClassId })
+                                     .Where(x => x.studentClassId == mail.toClassId)
+                                     .Select(x => db.User.FirstOrDefault(u => u.userId == x.parentId).email)
+                                     .Distinct()
+                                     .ToList();
+
+                // Wyślij e-mail do każdego rodzica
+                foreach (var email in parentEmails)
+                {
+                    if (!string.IsNullOrEmpty(email))
+                    {
+                        await SendEmailAsync(email, "Nowa wiadomość w dzienniku", "Masz nową wiadomość w dzienniku.");
+                    }
+                }
+
                 return RedirectToAction("Index");
             }
 
             return View(mail);
+        }
+
+        private async Task SendEmailAsync(string email, string subject, string message)
+        {
+            var smtpClient = new SmtpClient("smtp.gmail.com")
+            {
+                Port = 587,
+                Credentials = new NetworkCredential("mateoprokop@gmail.com", "zhnk exxu vrwt njfq"),
+                EnableSsl = true,
+            };
+
+            var mailMessage = new MailMessage
+            {
+                From = new MailAddress("mateoprokop@gmail.com"),
+                Subject = subject,
+                Body = message,
+                IsBodyHtml = true,
+            };
+            mailMessage.To.Add(email);
+
+            await smtpClient.SendMailAsync(mailMessage);
         }
 
         // GET: Mail/Edit/5

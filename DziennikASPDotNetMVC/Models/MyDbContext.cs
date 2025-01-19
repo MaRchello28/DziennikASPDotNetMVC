@@ -24,7 +24,7 @@ namespace DziennikASPDotNetMVC.Models
         public DbSet<StudentWithClass> StudentWithClasses { get; set; }
         public DbSet<TeacherWithSubject> TeacherWithSubjects { get; set; }
         public DbSet<QuizAndSelectedClass> QuizAndSelectedClasseses { get; set; }
-
+        public DbSet<ParentWithKid> parentWithKids { get; set; }
 
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
         {
