@@ -131,6 +131,37 @@ namespace DziennikASPDotNetMVC.Migrations
                     b.ToTable("HoursForLessons");
                 });
 
+            modelBuilder.Entity("DziennikASPDotNetMVC.Models.Inquiry", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("body")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("from")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("send")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("toTeacherId")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Inquiryes");
+                });
+
             modelBuilder.Entity("DziennikASPDotNetMVC.Models.Lesson", b =>
                 {
                     b.Property<int>("lessonId")

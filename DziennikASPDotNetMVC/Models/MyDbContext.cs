@@ -19,6 +19,7 @@ namespace DziennikASPDotNetMVC.Models
         public DbSet<HoursForLessons> HoursForLessons { get; set; }
         public DbSet<Quiz> Quizzes { get; set; }
         public DbSet<Question> Questions { get; set; }
+        public DbSet<Inquiry> Inquiryes { get; set; }
 
         //Łącznikowe
         public DbSet<StudentWithClass> StudentWithClasses { get; set; }
