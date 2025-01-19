@@ -1,0 +1,58 @@
+﻿@model ShowGradesViewModel
+
+@{
+    ViewData["Title"] = "Tabela ocen";
+}
+
+<h2>Oceny</h2>
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-warning">
+        @Model.ErrorMessage
+    </div>
+}
+
+<!-- Tabela z wynikami -->
+@if (Model.GradesTable != null && Model.GradesTable.Any())
+{
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Uczeń</th>
+                @foreach (var subject in Model.Subjects)
+                {
+                    <th>@subject.name</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var studentRow in Model.GradesTable)
+            {
+                <tr>
+                    <td>@studentRow.Student</td>
+                    @foreach (var subject in studentRow.GradesBySubject)
+                    {
+                        <td>
+                            @if (subject.Grades != null && subject.Grades.Count > 0)
+                            {
+                                string gradesString = string.Join(", ", subject.Grades);  // Łączymy oceny w jeden ciąg
+                                @gradesString
+                            }
+                            else
+                            {
+                                <span class="text-muted">Brak ocen</span>
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info">
+        Brak ocen do wyświetlenia.
+    </div>
+}
