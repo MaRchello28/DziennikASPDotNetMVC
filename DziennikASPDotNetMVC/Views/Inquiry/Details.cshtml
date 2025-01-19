@@ -1,0 +1,26 @@
+﻿@model DziennikASPDotNetMVC.Models.Inquiry
+
+@{
+    ViewBag.Title = "Szczegóły wiadomości";
+}
+
+<h2>Szczegóły wiadomości</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Dane wiadomości</h5>
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Temat:</strong> @Model.subject</p>
+                <p><strong>Od:</strong> @Model.from</p>
+                <p><strong>Do:</strong> @Model.to</p>
+                <p><strong>Data wysłania:</strong> @Model.send</p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Treść:</strong> @Model.body</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a asp-action="Index" class="btn btn-primary mt-3">Powrót do listy</a>

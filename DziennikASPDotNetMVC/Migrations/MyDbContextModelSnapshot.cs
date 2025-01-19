@@ -154,8 +154,9 @@ namespace DziennikASPDotNetMVC.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("toTeacherId")
-                        .HasColumnType("int");
+                    b.Property<string>("to")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
 
