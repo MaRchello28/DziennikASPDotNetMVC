@@ -15,7 +15,10 @@ namespace DziennikASPDotNetMVC.Controllers
         // GET: Mail
         public ActionResult Index()
         {
-            var mails = db.Mails.ToList();
+            var username = HttpContext.Session.GetString("UserId");
+            int.TryParse(username, out int id);
+            var user = db.User.FirstOrDefault(u => u.userId == id);
+            var mails = db.Mails.Where(m => m.from == user.login).ToList();
             return View(mails);
         }
 
@@ -36,10 +39,16 @@ namespace DziennikASPDotNetMVC.Controllers
         // POST: Mail/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("subject, body, from, to, send")] Mail mail)
+        public ActionResult Create([Bind("subject, body, toClassId")] Mail mail)
         {
+            ModelState.Remove("from");
             if (ModelState.IsValid)
             {
+                var username = HttpContext.Session.GetString("UserId");
+                int.TryParse(username, out int id);
+                var user = db.User.FirstOrDefault(u => u.userId == id);
+                mail.from = user.login;
+                mail.send = DateTime.Now;
                 db.Mails.Add(mail);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -61,10 +70,14 @@ namespace DziennikASPDotNetMVC.Controllers
         // POST: Mail/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind("mailId, subject, body, from, to, read, send")] Mail mail)
+        public ActionResult Edit([Bind("mailId, subject, from, body, toClassId")] Mail mail)
         {
+            ModelState.Remove("toClassId");
+            ModelState.Remove("mailId");
+            ModelState.Remove("from");
             if (ModelState.IsValid)
             {
+                mail.send = DateTime.Now;
                 db.Entry(mail).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

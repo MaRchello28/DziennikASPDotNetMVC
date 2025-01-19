@@ -32,37 +32,19 @@
             </div>
         </div>
 
-        <!-- From -->
-        <div class="form-group">
-            @Html.LabelFor(model => model.@from, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.@from, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.@from, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
         <!-- To -->
         <div class="form-group">
-            @Html.LabelFor(model => model.to, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.toClassId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.to, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.to, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <!-- Send Date -->
-        <div class="form-group">
-            @Html.LabelFor(model => model.send, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.send, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", type = "datetime-local" })
-                @Html.ValidationMessageFor(model => model.send, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.toClassId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.toClassId, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <!-- Submit Button -->
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Wyślij" class="btn btn-primary" />
             </div>
         </div>
     </div>
