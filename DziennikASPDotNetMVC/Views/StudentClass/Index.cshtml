@@ -1,39 +1,55 @@
-﻿@model IEnumerable<DziennikASPDotNetMVC.Models.StudentClass>
+﻿@model DziennikASPDotNetMVC.Models.ShowClassScheduleViewModel
 
 @{
-    ViewBag.Title = "Lista klas";
+    ViewBag.Title = "Plan Lekcji - " + Model.StudentName;
 }
 
-<h2>Lista klas</h2>
+<h2>@ViewBag.Title</h2>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>ID Klasy</th>
-            <th>Numer</th>
-            <th>Litera</th>
-            <th>Nauczyciel</th>
-            <th>Akcje</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var studentClass in Model)
-        {
+@if (Model.Sessions.Any())
+{
+    <table class="table table-bordered">
+        <thead>
             <tr>
-                <td>@studentClass.studentClassId</td>
-                <td>@studentClass.number</td>
-                <td>@studentClass.letter</td>
-                <td>@studentClass.teacherId</td> <!-- Optionally, replace with teacher name -->
-                <td>
-                    <a asp-action="Details" asp-route-id="@studentClass.studentClassId" class="btn btn-info btn-sm">Szczegóły</a>
-                    <a asp-action="Edit" asp-route-id="@studentClass.studentClassId" class="btn btn-warning btn-sm">Edytuj</a>
-                    <a asp-action="Delete" asp-route-id="@studentClass.studentClassId" class="btn btn-danger btn-sm">Usuń</a>
-                </td>
+                <th>Godzina</th>
+                <th>Poniedziałek</th>
+                <th>Wtorek</th>
+                <th>Środa</th>
+                <th>Czwartek</th>
+                <th>Piątek</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var timeSlot in new List<string> { "08:00 - 08:45", "09:00 - 09:45", "10:00 - 10:45", "11:00 - 11:45", "12:00 - 12:45", "13:00 - 13:45", "14:00 - 14:45" })
+            {
+                <tr>
+                    <td>@timeSlot</td>
 
-<p>
-    <a asp-action="Create" class="btn btn-success">Dodaj nową klasę</a>
-</p>
+                    @foreach (var daySchedule in Model.Sessions)
+                    {
+                        <td>
+                            @foreach (var session in daySchedule.Sessions)
+                            {
+                                // Sprawdzamy, czy godzina lekcji mieści się w wybranym czasie
+                                if (session.HourFrom.ToString(@"hh\:mm") == timeSlot.Split(' ')[0])
+                                {
+                                    <div>
+                                        <strong>@session.SubjectName</strong><br />
+                                        @session.TeacherName @session.TeacherSurname<br />
+                                        Sala: @session.Room
+                                    </div>
+                                }
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Brak sesji dla tego studenta.</p>
+}
+
+<button onclick="window.close();">Zamknij</button>

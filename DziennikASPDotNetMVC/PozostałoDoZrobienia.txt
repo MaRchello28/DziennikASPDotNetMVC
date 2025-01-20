@@ -1,8 +1,6 @@
 ﻿Jak coś zrobione to usuwać linijkę
 
 Funkcjonalności:
-• wysyłanie zapytań do nauczycieli poprzez konta rodziców. Zapytania oraz odpowiedzi
-widoczne po zalogowaniu – 4 pkt,
 • możliwość dodawania plików przez nauczycieli do poszczególnych przedmiotów – 2 pkt,
 • umieszczanie treści kształcenia przyporządkowanych do przedmiotów – 2 pkt,
 • wybór skórek dla interfejsu użytkownika – 2 pkt. za dwie istotnie różne skórki i 1 pkt. za

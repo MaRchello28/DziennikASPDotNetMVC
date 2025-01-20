@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Select Class and Subject";
+}
+
+<h1>Select Class and Subject</h1>
+
+<form method="post" asp-action="StudentsInClassAndSubject">
+    <div>
+        <label for="studentClassId">Class</label>
+        <select name="studentClassId" id="studentClassId">
+            @foreach (var item in ViewBag.Classes)
+            {
+                    <option value="@item.studentClassId">@item.number @item.letter</option>
+            }
+        </select>
+    </div>
+    <div>
+        <label for="subjectId">Subject</label>
+        <select name="subjectId" id="subjectId">
+            @foreach (var item in ViewBag.Subjects)
+            {
+                    <option value="@item.subjectId">@item.SubjectName</option>
+            }
+        </select>
+    </div>
+    <button type="submit">Select</button>
+</form>
