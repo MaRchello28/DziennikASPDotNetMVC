@@ -6,12 +6,12 @@
         public string subject { get; set; }
         public string body { get; set; }
         public string from { get; set; }
-        public int toTeacherId { get; set; }
+        public string to { get; set; }
         public DateTime send { get; set; }
         public Inquiry() { }
-        public Inquiry(string subject, string body, string from, int toTeacherId)
+        public Inquiry(string subject, string body, string from, string to)
         {
-            this.subject = subject; this.from = from; this.toTeacherId = toTeacherId; this.body = body;
+            this.subject = subject; this.from = from; this.to = to; this.body = body;
         }
     }
 }

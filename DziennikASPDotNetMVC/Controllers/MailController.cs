@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Mail;
 using System.Net;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 namespace DziennikASPDotNetMVC.Controllers
 {
@@ -61,7 +62,6 @@ namespace DziennikASPDotNetMVC.Controllers
             return View(mail);
         }
 
-        // GET: Mail/Create
         public ActionResult Create()
         {
             return View();
