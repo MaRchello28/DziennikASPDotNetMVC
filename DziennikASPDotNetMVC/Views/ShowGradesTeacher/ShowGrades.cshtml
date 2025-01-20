@@ -13,7 +13,6 @@
     </div>
 }
 
-<!-- Tabela z wynikami -->
 @if (Model.GradesTable != null && Model.GradesTable.Any())
 {
     <table class="table table-striped table-bordered">
@@ -36,7 +35,7 @@
                         <td>
                             @if (subject.Grades != null && subject.Grades.Count > 0)
                             {
-                                string gradesString = string.Join(", ", subject.Grades);  // Łączymy oceny w jeden ciąg
+                                string gradesString = string.Join(", ", subject.Grades);
                                 @gradesString
                             }
                             else
@@ -49,6 +48,11 @@
             }
         </tbody>
     </table>
+
+    <!-- Form to send email -->
+    <form method="post" action="@Url.Action("SendGradesEmail", "ShowGradesTeacher")">
+        <button type="submit" class="btn btn-primary">Wyślij email</button>
+    </form>
 }
 else
 {
